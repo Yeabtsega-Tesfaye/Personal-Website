@@ -34,7 +34,7 @@ To run **Pfolio** locally, run this command on your git bash:
 Linux and macOS:
 
 ```bash
-sudo git clone https://github.com/Yeabtsega-Tesfaye/Personal-Website.git
+sudo git clone https://github.com/yeabtsega-tesfaye/Personal-Website.git
 ```
 
 Windows:
