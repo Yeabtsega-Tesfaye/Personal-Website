@@ -16,7 +16,7 @@
   <!-- 
     - favicon
   -->
-  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
 
   <!-- 
     - google font link
@@ -42,12 +42,10 @@
   <!-- 
     - #PRELOADER
   -->
-
+  
   <div class="preloader" data-preloader>
     <div class="circle"></div>
   </div>
-
-
 
 
 
@@ -71,27 +69,27 @@
         <ul class="navbar-list">
 
           <li>
-            <a href="#" class="navbar-link">Home</a>
+            <a href="#Hero" class="navbar-link" data-navbar-link >Home</a>
           </li>
 
           <li>
-            <a href="#" class="navbar-link">Resume</a>
+            <a href="#Resume" class="navbar-link" data-navbar-link >Resume</a>
           </li>
 
           <li>
-            <a href="#" class="navbar-link">Services</a>
+            <a href="#Services" class="navbar-link" data-navbar-link >Services</a>
           </li>
 
           <li>
-            <a href="#" class="navbar-link">Portfolio</a>
+            <a href="#Portfolio" class="navbar-link" data-navbar-link >Portfolio</a>
           </li>
 
           <li>
-            <a href="#" class="navbar-link">Blog</a>
+            <a href="#Blog" class="navbar-link" data-navbar-link >Blog</a>
           </li>
 
           <li>
-            <a href="#" class="navbar-link">Contact</a>
+            <a href="#Contact" class="navbar-link" data-navbar-link >Contact</a>
           </li>
 
         </ul>
@@ -104,36 +102,33 @@
 
 
 
-
-
   <main>
     <article>
-
       <!-- 
-        - #HERO
+        - #HERO 
       -->
 
-      <section class="section hero" aria-label="home">
+      <section id="Hero" class="section hero" aria-label="home">
         <div class="container">
 
           <div class="hero-content">
 
-            <h1 class="h1 hero-title">Yeabtsega Tesfaye</h1>
+            <h1 class="h1 hero-title">Yeabtsega</h1>
 
             <p class="hero-subtitle">
               Creative Web Developer
             </p>
 
             <div class="hero-banner">
-              <img src="./assets/images/hero-banner.jpg" width="800" height="800" alt="kane williams" class="w-100">
+              <img src="./assets/images/hero-banner.jpg" width="800" height="800" alt="Yeabtsega Tesfaye's pic" class="w-100">
             </div>
 
-            <p class="section-text">
-              Hi, I’m Yeabtsega Tesfaye and I am creative web developer who dream making the world better place by
-              creating captivating products.
+            <p id="Resume" class="section-text">
+              Hi, I’m Yeabtsega Tesfaye and I am a creative web developer who dreams of making the world 
+              a better place by creating captivating products.
             </p>
 
-            <a href="#" class="btn has-before">
+            <a href="./assets/cv/CV.pdf" class="btn has-before" download>
               <span class="span">Download CV</span>
 
               <ion-icon name="download-outline" aria-hidden="true"></ion-icon>
@@ -152,7 +147,7 @@
         - #SERVICE
       -->
 
-      <section class="service" aria-labelledby="service-label">
+      <section class="service" id="Services" aria-labelledby="service-label">
         <div class="container">
 
           <div class="title-wrapper">
@@ -166,10 +161,9 @@
             </div>
 
             <p class="section-text">
-              Phasellus et lacus suscipit congue nisl the volutpat magna. donec miss the drana risus tincidunt convallis
-              velit orci congue tortor eu dignissim ipsum suam non odio. Pellenta esuntion miss the imperdiet metus
-              ornare.
+              I help individuals and businesses build beautiful, responsive websites and online stores. From simple personal pages to full eCommerce platforms, I focus on clean design, fast performance, and a smooth user experience.
             </p>
+            
 
           </div>
 
@@ -185,34 +179,13 @@
                   </div>
 
                   <h3 class="h3 card-title">Website Design</h3>
-
                   <p class="card-text">
-                    Website ravida surna eveti semen the conse tusio anivite dianne one nivam acestion vue artin dictum.
+                    I design clean, modern, and responsive websites using HTML, CSS, and JavaScript. Perfect for personal portfolios, small businesses, or any brand looking for a professional web presence.
                   </p>
 
                   <span class="text-lg card-number">01</span>
 
-                  <a href="#" class="layer-link" aria-label="More about my website design service"></a>
-
-                </div>
-              </li>
-
-              <li class="slider-item" data-slider-item>
-                <div class="service-card">
-
-                  <div class="card-icon">
-                    <ion-icon name="podium-outline"></ion-icon>
-                  </div>
-
-                  <h3 class="h3 card-title">SEO Marketing</h3>
-
-                  <p class="card-text">
-                    Website ravida surna eveti semen the conse tusio anivite dianne one nivam acestion vue artin dictum.
-                  </p>
-
-                  <span class="text-lg card-number">02</span>
-
-                  <a href="#" class="layer-link" aria-label="More about my SEO Marketing service"></a>
+                  <a href="#Portfolio" class="layer-link" aria-label="More about my website design service"></a>
 
                 </div>
               </li>
@@ -225,14 +198,14 @@
                   </div>
 
                   <h3 class="h3 card-title">eCommerce</h3>
-
                   <p class="card-text">
-                    Website ravida surna eveti semen the conse tusio anivite dianne one nivam acestion vue artin dictum.
+                    I build custom eCommerce websites ranging from simple product pages to complete multi-page stores with responsive design, clean UI, and shopping cart integration.
                   </p>
+                  
 
-                  <span class="text-lg card-number">03</span>
+                  <span class="text-lg card-number">02</span>
 
-                  <a href="#" class="layer-link" aria-label="More about my eCommerce service"></a>
+                  <a href="#Portfolio" class="layer-link" aria-label="More about my eCommerce service"></a>
 
                 </div>
               </li>
@@ -244,59 +217,37 @@
                     <ion-icon name="color-filter-outline"></ion-icon>
                   </div>
 
-                  <h3 class="h3 card-title">Graphic Design</h3>
-
+                  <h3 class="h3 card-title">Personal Websites</h3>
                   <p class="card-text">
-                    Website ravida surna eveti semen the conse tusio anivite dianne one nivam acestion vue artin dictum.
+                    Need a portfolio or profile site? I build fast-loading, visually impressive personal websites tailored to showcase your skills or business.
+                  </p>
+
+
+                  <span class="text-lg card-number">03</span>
+
+                  <a href="#Hero" class="layer-link" aria-label="More about my Graphic Design service"></a>
+
+                </div>
+              </li>
+
+              <li class="slider-item" data-slider-item>
+                <div class="service-card">
+
+                  <div class="card-icon">
+                    <ion-icon name="brush-outline"></ion-icon>
+                  </div>
+
+                  <h3 class="h3 card-title">Realistic Drawing</h3>
+                  <p class="card-text">
+                    I create high-quality realistic drawings, including portraits, religious iconography, and detailed sketches using pencil, pen, or mixed media. Perfect for personal gifts, wall art, or professional use.
                   </p>
 
                   <span class="text-lg card-number">04</span>
 
-                  <a href="#" class="layer-link" aria-label="More about my Graphic Design service"></a>
+                  <a href="https://www.tiktok.com/@yeabgifted" class="layer-link" aria-label="More about my drawing and artwork service"></a>
 
                 </div>
-              </li>
-
-              <li class="slider-item" data-slider-item>
-                <div class="service-card">
-
-                  <div class="card-icon">
-                    <ion-icon name="megaphone-outline"></ion-icon>
-                  </div>
-
-                  <h3 class="h3 card-title">Digital Marketing</h3>
-
-                  <p class="card-text">
-                    Website ravida surna eveti semen the conse tusio anivite dianne one nivam acestion vue artin dictum.
-                  </p>
-
-                  <span class="text-lg card-number">05</span>
-
-                  <a href="#" class="layer-link" aria-label="More about my Digital Marketing service"></a>
-
-                </div>
-              </li>
-
-              <li class="slider-item" data-slider-item>
-                <div class="service-card">
-
-                  <div class="card-icon">
-                    <ion-icon name="chatbubbles-outline"></ion-icon>
-                  </div>
-
-                  <h3 class="h3 card-title">Social Media</h3>
-
-                  <p class="card-text">
-                    Website ravida surna eveti semen the conse tusio anivite dianne one nivam acestion vue artin dictum.
-                  </p>
-
-                  <span class="text-lg card-number">06</span>
-
-                  <a href="#" class="layer-link" aria-label="More about my Social Media service"></a>
-
-                </div>
-              </li>
-
+             </li>
             </ul>
 
             <div class="slider-controls">
@@ -324,7 +275,7 @@
         - #SKILLS
       -->
 
-      <section class="section skills" aria-label="our skills">
+      <section class="section skills" aria-label="My skills">
         <div class="container">
 
           <p class="section-subtitle">I Make The Future</p>
@@ -335,16 +286,13 @@
 
             <div>
               <p class="section-text">
-                Pellentesque magna magna semper dapibus felis necatin aliuen risus. Pellentesque habitant morbi senectus
-                dictum.
+                I’m passionate about creating modern, responsive, and accessible websites that help individuals and businesses build a strong online presence. My focus is always on delivering clean design and smooth user experiences.
               </p>
-
+              
               <p class="section-text">
-                Web design magna magna semper dapibus felis necatin aliuen risus. Pellentesque habitant morbi tristique
-                senectus the neuse malesuada nullam ac lorem miss the duru.
+                Whether it’s a personal website or a full eCommerce platform, I combine creativity with technical skill to bring ideas to life. I’m always learning new tools and technologies to stay ahead and deliver future-ready solutions.
               </p>
 
-              <a href="yeabtsegayeab85@gmail.com" class="btn has-before">yeabtsegayeab85@gmail.com</a>
             </div>
 
             <div>
@@ -353,33 +301,9 @@
 
                 <li>
                   <div class="progress-wrapper">
-                    <p class="progress-label">Design</p>
+                    <p class="progress-label">Web Development</p>
 
-                    <data class="progress-value" value="90">90%</data>
-                  </div>
-
-                  <div class="progress-bg">
-                    <div class="progress" style="width: 90%;"></div>
-                  </div>
-                </li>
-
-                <li>
-                  <div class="progress-wrapper">
-                    <p class="progress-label">Branding</p>
-
-                    <data class="progress-value" value="80">80%</data>
-                  </div>
-
-                  <div class="progress-bg">
-                    <div class="progress" style="width: 80%;"></div>
-                  </div>
-                </li>
-
-                <li>
-                  <div class="progress-wrapper">
-                    <p class="progress-label">Web Design</p>
-
-                    <data class="progress-value" value="95">95%</data>
+                    <data class="progress-value" value="90">95%</data>
                   </div>
 
                   <div class="progress-bg">
@@ -389,13 +313,24 @@
 
                 <li>
                   <div class="progress-wrapper">
-                    <p class="progress-label">Social Media</p>
+                    <p class="progress-label">Web Design</p>
 
-                    <data class="progress-value" value="85">85%</data>
+                    <data class="progress-value" value="75">75%</data>
                   </div>
 
                   <div class="progress-bg">
-                    <div class="progress" style="width: 85%;"></div>
+                    <div class="progress" style="width: 75%;"></div>
+                  </div>
+                </li>
+                <li>
+                  <div class="progress-wrapper">
+                    <p class="progress-label">Realistic Drawing</p>
+
+                    <data class="progress-value" value="100">100%</data>
+                  </div>
+
+                  <div class="progress-bg">
+                    <div class="progress" style="width: 100%;"></div>
                   </div>
                 </li>
 
@@ -416,21 +351,20 @@
         - #PORTFOLIO
       -->
 
-      <section class="portfolio" aria-labelledby="portfolio-label">
+      <section class="portfolio" id="Portfolio" aria-labelledby="portfolio-label">
 
         <div class="title-wrapper container">
 
           <div>
-            <p class="section-subtitle" id="portfolio-label">Our Works</p>
+            <p class="section-subtitle" id="portfolio-label">My Works</p>
 
             <h2 class="h2 section-title">Portfolio</h2>
           </div>
 
           <p class="section-text">
-            Phasellus et lacus suscipit congue nisl the volutpat magna. donec miss the drana risus tincidunt convallis
-            velit orci congue tortor eu dignissim ipsum suam non odio. Pellenta esuntion miss the imperdiet metus
-            ornare.
+            Below are some of the projects I've worked on — from animated product landing pages to responsive eCommerce sites. I enjoy building interactive and visually appealing web experiences that solve real-world problems.
           </p>
+          
 
         </div>
 
@@ -445,12 +379,12 @@
                   class="img-cover">
 
                 <div class="card-content">
-                  <h3 class="h3 card-title">Lab. 001</h3>
+                  <h3 class="h3 card-title">Perfue</h3>
 
-                  <p class="card-text">Website Design</p>
-                </div>
+                  <p class="card-text">Perfume Website</p>
+                </div>5`
 
-                <a href="#" class="layer-link"></a>
+                <a href="https://Yeabtsega-Tesfaye.github.io/Perfue/" class="layer-link"></a>
 
               </div>
             </li>
@@ -462,12 +396,12 @@
                   class="img-cover">
 
                 <div class="card-content">
-                  <h3 class="h3 card-title">Aer Agency</h3>
+                  <h3 class="h3 card-title">EarPods Max</h3>
 
-                  <p class="card-text">Website / Development</p>
+                  <p class="card-text">Earpod Website</p>
                 </div>
 
-                <a href="#" class="layer-link"></a>
+                <a href="https://Yeabtsega-Tesfaye.github.io/Apple-AirPods-Max/" class="layer-link"></a>
 
               </div>
             </li>
@@ -479,12 +413,12 @@
                   class="img-cover">
 
                 <div class="card-content">
-                  <h3 class="h3 card-title">Joker Card</h3>
+                  <h3 class="h3 card-title">Glowing</h3>
 
-                  <p class="card-text">UX Design / Web App</p>
+                  <p class="card-text">Cosmetic Website</p>
                 </div>
 
-                <a href="#" class="layer-link"></a>
+                <a href="https://Yeabtsega-Tesfaye.github.io/Glowings/" class="layer-link"></a>
 
               </div>
             </li>
@@ -496,12 +430,12 @@
                   class="img-cover">
 
                 <div class="card-content">
-                  <h3 class="h3 card-title">Peaky Blinders</h3>
+                  <h3 class="h3 card-title">Cheffood</h3>
 
-                  <p class="card-text">Website / UX Design</p>
+                  <p class="card-text">Food Website</p>
                 </div>
 
-                <a href="#" class="layer-link"></a>
+                <a href="https://Yeabtsega-Tesfaye.github.io/Cheffood/" class="layer-link"></a>
 
               </div>
             </li>
@@ -513,12 +447,12 @@
                   class="img-cover">
 
                 <div class="card-content">
-                  <h3 class="h3 card-title">Design Zoom</h3>
+                  <h3 class="h3 card-title">Starbucks</h3>
 
-                  <p class="card-text">Branding / Design</p>
+                  <p class="card-text">Starbucks Website</p>
                 </div>
 
-                <a href="#" class="layer-link"></a>
+                <a href="https://Yeabtsega-Tesfaye.github.io/starbucks-landing-page/" class="layer-link"></a>
 
               </div>
             </li>
@@ -530,12 +464,108 @@
                   class="img-cover">
 
                 <div class="card-content">
-                  <h3 class="h3 card-title">Out Zone</h3>
+                  <h3 class="h3 card-title">Casmart</h3>
 
-                  <p class="card-text">UX Design / Web App</p>
+                  <p class="card-text">eCommerce Website</p>
                 </div>
 
-                <a href="#" class="layer-link"></a>
+                <a href="https://Yeabtsega-Tesfaye.github.io/Casmart/" class="layer-link"></a>
+
+              </div>
+            </li>
+            <li class="slider-item">
+              <div class="portfolio-card img-holder" style="--width: 600; --height: 600;">
+
+                <img src="./assets/images/portfolio-7.jpg" width="600" height="600" loading="lazy" alt="portfolio"
+                  class="img-cover">
+
+                <div class="card-content">
+                  <h3 class="h3 card-title">Fresh</h3>
+
+                  <p class="card-text">Fruit Website</p>
+                </div>
+
+                <a href="https://Yeabtsega-Tesfaye.github.io/Fresho/" class="layer-link"></a>
+
+              </div>
+            </li>
+            <li class="slider-item">
+              <div class="portfolio-card img-holder" style="--width: 600; --height: 600;">
+
+                <img src="./assets/images/portfolio-8.jpg" width="600" height="600" loading="lazy" alt="portfolio"
+                  class="img-cover">
+
+                <div class="card-content">
+                  <h3 class="h3 card-title">NIKE</h3>
+
+                  <p class="card-text">Shoes Website</p>
+                </div>
+
+                <a href="https://Yeabtsega-Tesfaye.github.io/Nike/" class="layer-link"></a>
+
+              </div>
+            </li>
+            <li class="slider-item">
+              <div class="portfolio-card img-holder" style="--width: 600; --height: 600;">
+
+                <img src="./assets/images/portfolio-9.jpg" width="600" height="600" loading="lazy" alt="portfolio"
+                  class="img-cover">
+
+                <div class="card-content">
+                  <h3 class="h3 card-title">Controller 1708</h3>
+
+                  <p class="card-text">Joystick Website</p>
+                </div>
+
+                <a href="https://Yeabtsega-Tesfaye.github.io/Controller1708/" class="layer-link"></a>
+
+              </div>
+            </li>
+            <li class="slider-item">
+              <div class="portfolio-card img-holder" style="--width: 600; --height: 600;">
+
+                <img src="./assets/images/portfolio-10.jpg" width="600" height="600" loading="lazy" alt="portfolio"
+                  class="img-cover">
+
+                <div class="card-content">
+                  <h3 class="h3 card-title">Dentelo</h3>
+
+                  <p class="card-text">Dental Website</p>
+                </div>
+
+                <a href="https://Yeabtsega-Tesfaye.github.io/Dentelo/" class="layer-link"></a>
+
+              </div>
+            </li>
+            <li class="slider-item">
+              <div class="portfolio-card img-holder" style="--width: 600; --height: 600;">
+
+                <img src="./assets/images/portfolio-11.jpg" width="600" height="600" loading="lazy" alt="portfolio"
+                  class="img-cover">
+
+                <div class="card-content">
+                  <h3 class="h3 card-title">Woodex</h3>
+
+                  <p class="card-text">Furniture Website</p>
+                </div>
+
+                <a href="https://Yeabtsega-Tesfaye.github.io/Woodex/" class="layer-link"></a>
+
+              </div>
+            </li>
+            <li class="slider-item">
+              <div class="portfolio-card img-holder" style="--width: 600; --height: 600;">
+
+                <img src="./assets/images/portfolio-12.jpg" width="600" height="600" loading="lazy" alt="portfolio"
+                  class="img-cover">
+
+                <div class="card-content">
+                  <h3 class="h3 card-title">Artwork</h3>
+
+                  <p class="card-text">Realistic Drawing</p>
+                </div>
+
+                <a href="https://www.tiktok.com/@yeabgifted" class="layer-link"></a>
 
               </div>
             </li>
@@ -566,39 +596,37 @@
         - #BLOG
       -->
 
-      <section class="section blog" aria-labelledby="blog-label">
+      <section class="section blog" id="Blog" aria-labelledby="blog-label">
         <div class="container">
 
           <p class="section-subtitle" id="blog-label">Recent Articles</p>
 
-          <h2 class="h2 section-title">Latest News</h2>
+          <h2 class="h2 section-title">Latest Stuffs</h2>
 
           <ul class="blog-list">
 
             <li>
               <div class="blog-card">
 
-                <figure class="card-banner img-holder" style="--width: 700; --height: 470;">
+                <!-- <figure class="card-banner img-holder" style="--width: 700; --height: 470;">
                   <img src="./assets/images/blog-1.jpg" width="700" height="470" loading="lazy"
                     alt="Get Started With Tiktok Ads." class="img-cover">
-                </figure>
+                </figure> -->
 
                 <div class="card-content">
 
-                  <time class="time" datetime="2022-06-24">
+                  <time class="time" datetime="2025-06-24">
                     <span class="span text-lg">24</span>
-                    June 2022
+                    June 2025
                   </time>
 
                   <div>
-                    <h3 class="h3 card-title">Get Started With Tiktok Ads.</h3>
-
+                    <h3 class="h3 card-title">How I Built My First Animated Website with GSAP</h3>
                     <p class="card-text">
-                      Phasellus et lacus suscipit congue nis in the miss mine one miss the drana risus in tincidunt
-                      ornare.
+                      I used GSAP to animate a perfume landing page with smooth transitions and scroll effects. Here’s what I learned as a beginner.
                     </p>
 
-                    <a href="#" class="btn has-before">
+                    <a href="./assets/blogs/blog1.html" target="_blank" rel="noopener noreferrer" class="btn has-before">
                       <span class="span">Read more</span>
 
                       <ion-icon name="arrow-forward"></ion-icon>
@@ -613,27 +641,26 @@
             <li>
               <div class="blog-card">
 
-                <figure class="card-banner img-holder" style="--width: 700; --height: 470;">
+                <!-- <figure class="card-banner img-holder" style="--width: 700; --height: 470;">
                   <img src="./assets/images/blog-2.jpg" width="700" height="470" loading="lazy"
                     alt="UX in Ecommerce – 5 things to avoid." class="img-cover">
-                </figure>
+                </figure> -->
 
                 <div class="card-content">
 
-                  <time class="time" datetime="2022-06-27">
+                  <time class="time" datetime="2025-06-27">
                     <span class="span text-lg">27</span>
-                    June 2022
+                    June 2025
                   </time>
 
                   <div>
-                    <h3 class="h3 card-title">UX in Ecommerce – 5 things to avoid.</h3>
-
+                    <h3 class="h3 card-title">5 Mistakes I Made as a Beginner Freelancer</h3>
                     <p class="card-text">
-                      Phasellus et lacus suscipit congue nis in the miss mine one miss the drana risus in tincidunt
-                      ornare.
+                      Starting on Upwork wasn't easy. I learned some tough lessons early — here are 5 mistakes I made and how you can avoid them.
                     </p>
+                    
 
-                    <a href="#" class="btn has-before">
+                    <a href="./assets/blogs/blog2.html" target="_blank" rel="noopener noreferrer" class="btn has-before">
                       <span class="span">Read more</span>
 
                       <ion-icon name="arrow-forward"></ion-icon>
@@ -662,7 +689,7 @@
   -->
 
   <footer class="footer">
-    <div class="container">
+    <div id="Contact" class="container">
 
       <ul class="footer-list">
 
@@ -671,7 +698,7 @@
         </li>
 
         <li>
-          <a href="http://yeabtsegayeab85.@gmail.com" class="footer-link">yeabtsegayeab85.@gmail</a>
+          <a href="yeabtsegayeab85.@gmail.com" class="footer-link btn has-before" >yeabtsegayeab85.@gmail</a>
         </li>
 
       </ul>
@@ -683,7 +710,7 @@
         </li>
 
         <li>
-          <a href="#" class="footer-link">Ethiopia - woldia</a>
+          <a href="#" class="footer-link">Ethiopia - Woldia</a>
         </li>
 
       </ul>
@@ -691,19 +718,19 @@
       <ul class="social-list">
 
         <li>
-          <a href="https://github.com/Yeabtsega-Tesfaye" class="social-link">
+          <a href="https.//t.me/Confidential_boy" class="social-link">
+            <ion-icon name="logo-telegram"></ion-icon>
+          </a>
+        </li>
+
+        <li>
+          <a href="https.//github.com/Yeabtsega-Tesfaye" class="social-link">
             <ion-icon name="logo-github"></ion-icon>
           </a>
         </li>
 
         <li>
-          <a href="http://t.me/confidential_boy" class="social-link">
-            <ion-icon name="logo-Telegram"></ion-icon>
-          </a>
-        </li>
-
-        <li>
-          <a href="https://www.linkedin.com/in/yeabtsega-tesfaye-527375328?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="social-link">
+          <a href="https://www.linkedin.com/in/dev-yeabtsega" class="social-link">
             <ion-icon name="logo-linkedin"></ion-icon>
           </a>
         </li>
@@ -712,8 +739,6 @@
 
     </div>
   </footer>
-
-
 
 
 
