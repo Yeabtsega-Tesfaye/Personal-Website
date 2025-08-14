@@ -845,6 +845,16 @@ body.nav-active {
 
 @media (min-width: 575px) {
 
+  :root {
+
+    /**
+     * typography
+     */
+
+    --fs-2: 5rem;
+    --fs-3: 4.5rem;
+
+
   /**
    * REUSED STYLE
    */
