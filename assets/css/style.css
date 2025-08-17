@@ -813,8 +813,25 @@ body.nav-active {
 
 .social-list {
   display: flex;
-  gap: 8px;
+  gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
+
+.social-link ion-icon,
+.social-link img {
+  width: 28px;
+  height: 28px;
+  color: #333;
+  transition: transform 0.2s, color 0.3s;
+}
+
+.social-link:hover ion-icon,
+.social-link:hover img {
+  transform: scale(1.1);
+}
+
 
 .social-link {
   width: 45px;
