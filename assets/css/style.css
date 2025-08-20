@@ -866,6 +866,19 @@ body.nav-active {
    * REUSED STYLE
    */
 
+:root {
+
+    /**
+     * typography
+     */
+
+    --fs-2: 4rem;
+    --fs-3: 3rem;
+
+  }
+
+
+
   .container {
     max-width: 570px;
     width: 100%;
@@ -920,7 +933,7 @@ body.nav-active {
      */
 
     --fs-2: 6rem;
-    --fs-3: 5.5rem;
+    --fs-3: 5rem;
 
   }
 
