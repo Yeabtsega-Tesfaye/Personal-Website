@@ -11,7 +11,7 @@
 
   A fully responsive personal portfolio website, <br />Responsive for all devices, build using HTML, CSS, and JavaScript.
 
-  <a href="https://Yeabtsega-Tesfaye.github.io/Personal-Website/"><strong>➥ Live Demo</strong></a>
+  <a href="https://yeab-tsega.netlify.app"><strong>➥ Live Demo</strong></a>
 
 </div>
 
