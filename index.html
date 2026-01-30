@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Primary meta tags -->
+  <title>Yeabtsega  -  Developer</title>
+  <meta name="title" content="Yeabtsega Tesfaye - Software Engineer & Developer">
+  <meta name="description" content="Software engineering student and full-stack developer building robust, scalable applications">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Modern Icons (Font Awesome) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- Preload images -->
+  <link rel="preload" as="image" href="./assets/images/hero-banner.jpg">
+
+</head>
+<body>
+
+  <!-- ================= TERMINAL WELCOME ================= -->
+<div class="terminal-overlay" id="terminalOverlay">
+  <div class="terminal-window">
+    <!-- Terminal Header -->
+    <div class="terminal-header">
+      <div class="terminal-controls">
+        <button class="control close" aria-label="Close terminal"></button>
+        <button class="control minimize" aria-label="Minimize terminal"></button>
+        <button class="control maximize" aria-label="Maximize terminal"></button>
+      </div>
+      <div class="terminal-title">
+        <i class="fas fa-terminal"></i>
+        terminal@silentCompiler: ~/welcome
+      </div>
+    </div>
+
+    <!-- Terminal Body -->
+    <div class="terminal-body">
+      <div class="terminal-content">
+        <!-- Initial messages will be added by JS -->
+        <div class="terminal-line">
+          <span class="prompt">$</span>
+          <span class="command">whoami</span>
+        </div>
+        <div class="terminal-output">silentCompiler</div>
+        
+        <div class="terminal-line">
+          <span class="prompt">$</span>
+          <span class="command">cat about.txt</span>
+        </div>
+        <div class="terminal-output">
+          Software Engineer & Full-Stack Developer<br>
+          Building robust, scalable applications<br>
+          Based in Ethiopia | 3+ Years Experience
+        </div>
+        
+        <div class="terminal-line">
+          <span class="prompt">$</span>
+          <span class="command">ls skills/</span>
+        </div>
+        <div class="terminal-output">
+          <span class="dir">backend/</span>
+          <span class="dir">frontend/</span>
+          <span class="dir">databases/</span>
+          <span class="file">tools.js</span>
+        </div>
+        
+        <div class="terminal-line">
+          <span class="prompt">$</span>
+          <span class="command">npm start portfolio</span>
+        </div>
+        <div class="terminal-output">
+          > Starting portfolio server...<br>
+          > Portfolio ready at <span class="accent">https://yeabtsega.dev</span><br>
+          > Press <kbd>Enter</kbd> to continue...
+        </div>
+        
+        <!-- Active typing line -->
+        <div class="terminal-line active-line">
+          <span class="prompt">$</span>
+          <span class="command" id="typingCommand"></span>
+          <span class="cursor">█</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Terminal Footer -->
+    <div class="terminal-footer">
+      <div class="hint">
+        <i class="fas fa-info-circle"></i>
+        Tip: Type <code>help</code> for available commands
+      </div>
+      <button class="btn-skip" id="skipTerminal">
+        Skip Intro <i class="fas fa-forward"></i>
+      </button>
+    </div>
+  </div>
+</div>
+  <!-- Loading animation -->
+  <div class="loader">
+    <div class="loader-spinner"></div>
+  </div>
+
+
+
+  <!-- ================= HEADER ================= -->
+  <header class="site-header">
+    <div class="container header-inner">
+
+      <div class="brand">
+        <a href="#" class="logo">&lt;silentCompiler/&gt;</a>
+      </div>
+
+      <nav class="main-nav">
+        <ul class="nav-list">
+          <li><a href="#about" data-text="About"><span>About</span></a></li>
+          <li><a href="#skills" data-text="Skills"><span>Skills</span></a></li>
+          <li><a href="#services" data-text="Work"><span>Work</span></a></li>
+          <li><a href="#projects" data-text="Projects"><span>Projects</span></a></li>
+          <li><a href="#contact" class="nav-cta" data-text="Contact"><span>Contact</span></a></li>
+        </ul>
+      </nav>
+
+      <button class="nav-toggle" aria-label="Toggle navigation" >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+  </header>
+
+  <!-- ===================== HERO SECTION ===================== -->
+  <section id="hero" class="section hero">
+
+    <div class="hero-bg">
+      <div class="hero-grid"></div>
+      <div class="hero-noise"></div>
+    </div>
+
+    <div class="container hero-container">
+
+      <div class="hero-layout">
+
+        <!-- LEFT: TEXT CONTENT -->
+        <div class="hero-content">
+
+          <span class="eyebrow">Software Engineer</span>
+
+          <h1 class="hero-title">
+            Yeabtsega <br />
+            <span class="accent">Tesfaye</span>
+          </h1>
+
+          <p class="hero-description">
+            I build software that solves real problems. From backend systems to intuitive interfaces, I focus on creating efficient, scalable solutions that make a difference.
+          </p>
+
+<div class="hero-actions">
+  <!-- View Projects button with magnetic effect -->
+  <div class="magnetic-container">
+    <div class="magnetic-particles" data-button="projects"></div>
+    <a href="#projects" class="btn btn-primary btn-magnetic" data-magnetic-id="projects">
+      View Projects
+    </a>
+  </div>
+  
+  <!-- Get in Touch button with magnetic effect -->
+  <div class="magnetic-container">
+    <div class="magnetic-particles" data-button="contact"></div>
+    <a href="#contact" class="btn btn-outline btn-magnetic" data-magnetic-id="contact">
+      Get in Touch
+    </a>
+  </div>
+</div>
+
+        <div class="hero-meta">
+          <div class="meta-item">
+            <span class="meta-value">3+</span>
+            <span class="meta-label">Years Experience</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-value">25+</span>
+            <span class="meta-label">Projects Built</span>
+          </div>
+        </div>
+
+        </div>
+
+        <!-- RIGHT: VISUAL CONTENT -->
+        <div class="hero-visual">
+
+          <div class="visual-wrapper">
+            <!-- Secondary blob -->
+            <div class="visual-blob secondary"></div>
+
+            <!-- Main blob with image -->
+            <div class="visual-blob">
+              <img src="./assets/images/placeholder.jpg" data-src="./assets/images/hero-banner.jpg" alt="Portrait" class="hero-image" />
+            </div>
+
+            <!-- Floating decorations -->
+            <div class="floating floating-1">
+            </div>
+            <div class="floating floating-2">
+            </div>
+            <div class="floating floating-3">
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="scroll-indicator">
+        <span class="scroll-text">Scroll</span>
+        <span class="scroll-line"></span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== ABOUT SECTION ===================== -->
+  <section id="about" class="section about">
+
+    <div class="container">
+
+      <div class="section-header">
+        <span class="eyebrow">About Me</span>
+        <h2 class="section-title">
+          Building Systems <br />
+          <span class="accent">That Scale</span>
+        </h2>
+      </div>
+
+      <div class="about-layout">
+
+        <!-- LEFT: IMAGE STACK -->
+        <div class="about-visual">
+
+          <div class="image-stack">
+
+            <div class="image-layer image-main">
+              <img
+                src="./assets/images/about.jpg"
+                alt="Working setup"
+              />
+            </div>
+
+            <div class="image-layer image-overlay">
+              <img
+                src="./assets/images/about-detail.jpg"
+                alt="Detail shot"
+              />
+            </div>
+
+            <div class="image-frame"></div>
+
+          </div>
+
+        </div>
+
+        <!-- RIGHT: TEXT -->
+        <div class="about-content">
+
+          <p class="about-lead">
+            I'm a software engineering student passionate about building complete solutions, not just interfaces. I enjoy working across the stack to create cohesive, efficient applications.
+          </p>
+
+          <p>
+            My journey started with web development, but I quickly realized the importance of understanding how everything works together. Now I focus on building systems that are maintainable, scalable, and performant.
+          </p>
+
+          <p>
+            Whether it's optimizing a database query, designing a REST API, or creating a responsive UI, I approach each problem with a focus on both the immediate need and long term sustainability.
+          </p>
+
+          <div class="about-stats">
+
+            <div class="stat-card">
+              <span class="stat-number">Full Stack</span>
+              <span class="stat-label">Developer</span>
+            </div>
+
+            <div class="stat-card">
+              <span class="stat-number">25+</span>
+              <span class="stat-label">Projects</span>
+            </div>
+
+          </div>
+
+          <a href="./assets/cv/CV.pdf" target="_blank" class="btn btn-primary">
+            <i class="fas fa-file-alt"></i>
+            View Resume
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== SERVICES SECTION ===================== -->
+  <section id="services" class="section services">
+
+    <div class="container">
+
+      <div class="section-header">
+        <span class="eyebrow">What I Do</span>
+        <h2 class="section-title">
+          End to End <br />
+          <span class="accent">Development</span>
+        </h2>
+        <p class="section-description">
+          I handle everything from database design to deployment, ensuring each component works together seamlessly.
+        </p>
+      </div>
+
+      <div class="services-grid">
+
+        <!-- SERVICE CARD -->
+        <article class="service-card">
+
+          <div class="service-icon">
+            <i class="fas fa-server"></i>
+          </div>
+
+          <h3 class="service-title">Backend Development</h3>
+
+          <p class="service-text">
+            Building robust APIs, managing databases, and implementing server side logic with performance and security in mind.
+          </p>
+
+          <ul class="service-points">
+            <li><i class="fas fa-check"></i> RESTful APIs</li>
+            <li><i class="fas fa-check"></i> Database Design</li>
+            <li><i class="fas fa-check"></i> Authentication Systems</li>
+          </ul>
+
+          <span class="service-index">01</span>
+
+        </article>
+
+        <!-- SERVICE CARD -->
+        <article class="service-card">
+
+          <div class="service-icon">
+            <i class="fas fa-code"></i>
+          </div>
+
+          <h3 class="service-title">Frontend Development</h3>
+
+          <p class="service-text">
+            Creating intuitive, responsive interfaces that provide excellent user experiences across all devices.
+          </p>
+
+          <ul class="service-points">
+            <li><i class="fas fa-check"></i> React Applications</li>
+            <li><i class="fas fa-check"></i> Responsive Design</li>
+            <li><i class="fas fa-check"></i> State Management</li>
+          </ul>
+
+          <span class="service-index">02</span>
+
+        </article>
+
+        <!-- SERVICE CARD -->
+        <article class="service-card">
+
+          <div class="service-icon">
+            <i class="fas fa-database"></i>
+          </div>
+
+          <h3 class="service-title">Database & Systems</h3>
+
+          <p class="service-text">
+            Designing and optimizing data storage solutions, from SQL schemas to NoSQL structures.
+          </p>
+
+          <ul class="service-points">
+            <li><i class="fas fa-check"></i> SQL & NoSQL</li>
+            <li><i class="fas fa-check"></i> Query Optimization</li>
+            <li><i class="fas fa-check"></i> Data Modeling</li>
+          </ul>
+
+          <span class="service-index">03</span>
+
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== SKILLS SECTION ===================== -->
+  <section id="skills" class="section skills">
+
+    <div class="container">
+
+      <div class="section-header">
+        <span class="eyebrow">Technical Skills</span>
+        <h2 class="section-title">
+          My Development <br />
+          <span class="accent">Toolkit</span>
+        </h2>
+        <p class="section-description">
+          I work with a diverse set of technologies to build complete, production ready applications.
+        </p>
+      </div>
+
+      <div class="skills-layout">
+
+        <!-- LEFT: TEXT -->
+        <div class="skills-content">
+
+          <p class="skills-lead">
+            I believe in using the right tool for the job. My approach combines established technologies with modern frameworks to build efficient solutions.
+          </p>
+
+          <p>
+            I'm constantly learning and adapting to new technologies while maintaining strong fundamentals in computer science and software engineering principles.
+          </p>
+
+          <div class="skills-cta">
+            <a href="https://github.com/Yeabtsega-Tesfaye" target="_blank" class="btn btn-outline">
+              <i class="fab fa-github"></i>
+              View GitHub
+            </a>
+          </div>
+
+        </div>
+
+        <!-- RIGHT: SKILL GROUPS -->
+        <div class="skills-groups">
+
+          <!-- GROUP -->
+          <div class="skill-group">
+            <h3 class="group-title">
+              <i class="fas fa-laptop-code"></i>
+              Languages
+            </h3>
+
+            <ul class="skill-list">
+              <li>
+                <i class="fab fa-cuttlefish"></i>
+                <span class="skill-name">C++</span>
+                <span class="skill-level">Intermediate</span>
+              </li>
+              <li>
+                <i class="fab fa-java"></i>
+                <span class="skill-name">Java</span>
+                <span class="skill-level">Intermediate</span>
+              </li>
+              <li>
+                <i class="fab fa-js"></i>
+                <span class="skill-name">JavaScript</span>
+                <span class="skill-level">Advanced</span>
+              </li>
+              <li>
+                <i class="fab fa-php"></i>
+                <span class="skill-name">PHP</span>
+                <span class="skill-level">Intermediate</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- GROUP -->
+          <div class="skill-group">
+            <h3 class="group-title">
+              <i class="fas fa-cogs"></i>
+              Frameworks & Tools
+            </h3>
+
+            <ul class="skill-list">
+              <li>
+                <i class="fab fa-react"></i>
+                <span class="skill-name">React</span>
+                <span class="skill-level">Advanced</span>
+              </li>
+              <li>
+                <i class="fab fa-node-js"></i>
+                <span class="skill-name">Node.js</span>
+                <span class="skill-level">Intermediate</span>
+              </li>
+              <li>
+                <i class="fas fa-bolt"></i>
+                <span class="skill-name">Express.js</span>
+                <span class="skill-level">Intermediate</span>
+              </li>
+              <li>
+                <i class="fab fa-npm"></i>
+                <span class="skill-name">npm</span>
+                <span class="skill-level">Intermediate</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- GROUP -->
+          <div class="skill-group">
+            <h3 class="group-title">
+              <i class="fas fa-database"></i>
+              Databases & Systems
+            </h3>
+
+            <ul class="skill-list">
+              <li>
+                <i class="fas fa-database"></i>
+                <span class="skill-name">MySQL</span>
+                <span class="skill-level">Intermediate</span>
+              </li>
+              <li>
+                <i class="fas fa-database"></i>
+                <span class="skill-name">MongoDB</span>
+                <span class="skill-level">Intermediate</span>
+              </li>
+              <li>
+                <i class="fab fa-linux"></i>
+                <span class="skill-name">Linux</span>
+                <span class="skill-level">Intermediate</span>
+              </li>
+              <li>
+                <i class="fas fa-microchip"></i>
+                <span class="skill-name">Assembly</span>
+                <span class="skill-level">Basic</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== PORTFOLIO SECTION ===================== -->
+  <section id="projects" class="section portfolio">
+
+    <div class="container">
+
+      <div class="section-header">
+        <span class="eyebrow">My Projects</span>
+        <h2 class="section-title">
+          Building Solutions <br />
+          <span class="accent">Across the Stack</span>
+        </h2>
+        <p class="section-description">
+          From full stack applications to focused frontend work, each project represents problem solving with code.
+        </p>
+      </div>
+
+      <div class="portfolio-grid">
+      <!-- PORTFOLIO ITEM -->
+      <article class="portfolio-card">
+        <div class="img-holder">
+          <img src="./assets/images/portfolio-2.jpg" alt="EarPods Max Project" class="img-cover" />
+        </div>
+        <div class="card-overlay">
+          <h3 class="card-title">EarPods Max</h3>
+          <p class="card-text">Product Landing Page</p>
+          <a href="https://Yeabtsega-Tesfaye.github.io/Apple-AirPods-Max/" target="_blank" class="btn-overlay"><i class="fas fa-external-link-alt"></i>View Project</a>
+        </div>
+      </article>
+
+      <!-- PORTFOLIO ITEM -->
+      <article class="portfolio-card">
+        <div class="img-holder">
+          <img src="./assets/images/portfolio-3.jpg" alt="Glowing Project" class="img-cover" />
+        </div>
+        <div class="card-overlay">
+          <h3 class="card-title">Glowing</h3>
+          <p class="card-text">Cosmetics E-commerce Website</p>
+          <a href="https://Yeabtsega-Tesfaye.github.io/Glowings/" target="_blank" class="btn-overlay"><i class="fas fa-external-link-alt"></i>View Project</a>
+        </div>
+      </article>
+
+      <!-- PORTFOLIO ITEM -->
+      <article class="portfolio-card">
+        <div class="img-holder">
+          <img src="./assets/images/portfolio-6.jpg" alt="Casmart Project" class="img-cover" />
+        </div>
+        <div class="card-overlay">
+          <h3 class="card-title">Casmart</h3>
+          <p class="card-text">eCommerce Website</p>
+          <a href="https://Yeabtsega-Tesfaye.github.io/Casmart/" target="_blank" class="btn-overlay"><i class="fas fa-external-link-alt"></i>View Project</a>
+        </div>
+      </article>
+      </div>
+
+      <div class="section-cta" style="margin: 1rem 0.5rem;">
+        <a href="https://github.com/Yeabtsega-Tesfaye" target="_blank" class="btn btn-primary">
+          <i class="fab fa-github"></i>
+          View More on GitHub
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== BLOG SECTION ===================== -->
+  <section id="blog" class="section blog">
+
+    <div class="container">
+
+      <div class="section-header">
+        <span class="eyebrow">Thoughts & Learning</span>
+        <h2 class="section-title">
+          Sharing Knowledge <br />
+          <span class="accent">Along the Way</span>
+        </h2>
+        <p class="section-description">
+          I write about technical challenges, learning experiences, and insights from building software.
+        </p>
+      </div>
+
+      <div class="blog-grid">
+
+        <!-- BLOG CARD -->
+        <article class="blog-card">
+          <div class="card-image">
+            <img src="./assets/images/portfolio-1.jpg" alt="GSAP Animated Website" class="img-cover" />
+          </div>
+          <div class="card-content">
+            <div class="card-meta">
+              <time datetime="2025-06-24" class="time"><i class="fas fa-calendar"></i>24 June 2025</time>
+              <span  class="read-time">5 min read</span>
+            </div>
+            <h3 class="card-title">Building My First Animated Website with GSAP</h3>
+            <p class="card-text">
+              A deep dive into creating smooth animations and scroll effects for a modern perfume landing page, and the lessons learned along the way.
+            </p>
+            <a href="./assets/blogs/blog1.html" target="_blank" rel="noopener noreferrer" class="btn btn-read-more">
+              Read Article
+            </a>
+          </div>
+        </article>
+
+        <!-- BLOG CARD -->
+        <article class="blog-card">
+          <div class="card-image">
+            <img src="./assets/images/Screenshot_20260129_002917_Chrome.jpg" alt="Upwork Freelancer Mistakes" class="img-cover" />
+          </div>
+          <div class="card-content">
+            <div class="card-meta">
+              <time datetime="2025-06-27" class="time"><i class="fas fa-calendar"></i>27 June 2025</time>
+              <span class="read-time">7 min read</span>
+            </div>
+            <h3 class="card-title">What I Learned as a Beginner Freelancer</h3>
+            <p class="card-text">
+              Practical insights from my early freelancing experiences, including pricing, client communication, and project management on Upwork.
+            </p>
+            <a href="./assets/blogs/blog2.html" target="_blank" rel="noopener noreferrer" class="btn btn-read-more">
+              Read Article
+            </a>
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT / FOOTER ===================== -->
+  <footer style="margin-top: 0.5rem;" id="contact" class="footer section">
+
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <!-- CONTACT INFO -->
+        <div class="footer-card">
+          <h4 class="footer-title">
+            Get in Touch
+          </h4>
+          <p class="footer-text">Have a project idea or want to collaborate? Give me a call!</p>
+          <a href="tel : +251914602982" class="footer-link btn">
+            <i class="fas fa-phone"></i>
+            +251-914-602-982
+          </a>
+        </div>
+
+        <!-- LOCATION -->
+        <div class="footer-card">
+          <h4 class="footer-title">
+            Location
+          </h4>
+          <p class="footer-text">
+            
+            Based in Woldia, Ethiopia<i class="fas fa-map-marker-alt" style="color: var(--accent);"></i></p>
+          <p class="footer-text">Available for remote work worldwide</p>
+        </div>
+
+        <!-- SOCIAL LINKS -->
+        <div class="footer-card">
+          <h4 class="footer-title">
+            Connect With Me
+          </h4>
+          <p class="footer-text">Follow my work and get in touch</p>
+          <ul class="social-list">
+            <li>
+              <a href="https://github.com/Yeabtsega-Tesfaye" target="_blank" class="social-link">
+                <i class="fab fa-github"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/in/dev-yeabtsega" target="_blank" class="social-link">
+                <i class="fab fa-linkedin"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://t.me/Confidential_boy" target="_blank" class="social-link">
+                <i class="fab fa-telegram"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom" style="font-size: 0.8rem;">
+        <p >
+          <i class="far fa-copyright" ></i>
+          2026 Yeabtsega Tesfaye. All rights reserved.
+        </p>
+        <p class="footer-note">
+          Built with <i class="fas fa-heart" style="color: var(--accent);"></i> and a lot of <i class="fas fa-coffee" style="color: var(--accent);"></i>
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+        <!-- Code Rain Canvas -->
+<canvas id="codeRain" class="code-rain-canvas"></canvas>
+
+<!-- Code Rain Toggle & Controls -->
+<div class="rain-controls-wrapper">
+  <button id="rainToggle" class="rain-toggle" aria-label="Toggle code rain effect" title="Toggle code rain">
+    <i class="fas fa-code"></i>
+  </button>
+  
+  <div class="rain-intensity-dropdown">
+    <button class="dropdown-toggle" aria-label="Code rain intensity">
+      <i class="fas fa-sliders-h"></i>
+    </button>
+    <div class="dropdown-menu">
+      <button data-intensity="off" class="intensity-btn">
+        <i class="fas fa-power-off"></i> Off
+      </button>
+      <button data-intensity="light" class="intensity-btn">
+        <i class="fas fa-cloud"></i> Light
+      </button>
+      <button data-intensity="medium" class="intensity-btn active">
+        <i class="fas fa-tint"></i> Medium
+      </button>
+      <button data-intensity="intense" class="intensity-btn">
+        <i class="fas fa-bolt"></i> Intense
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Sound Controller UI - FINAL FIXED VERSION -->
+<div class="sound-controls">
+  <!-- Wave on LEFT (shows when sound plays) -->
+  <div class="sound-wave">
+    <div class="wave-bar"></div>
+    <div class="wave-bar"></div>
+    <div class="wave-bar"></div>
+    <div class="wave-bar"></div>
+    <div class="wave-bar"></div>
+  </div>
+  
+  <!-- Toggle on RIGHT -->
+  <button id="soundToggle" class="sound-toggle" aria-label="Toggle sound effects" title="Sound On/Off">
+    <i class="fas fa-volume-mute"></i>
+  </button>
+</div>
+  <script src="./assets/js/script.js"></script>
+</body>
+</html>
