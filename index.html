@@ -21,6 +21,10 @@
   <!-- Modern Icons (Font Awesome) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon-colors.css">
+
+
   <!-- Custom CSS -->
   <link rel="stylesheet" href="./assets/css/style.css">
 
@@ -405,7 +409,7 @@
     </div>
   </section>
 
-  <!-- ===================== SKILLS SECTION ===================== -->
+
   <section id="skills" class="section skills">
 
     <div class="container">
@@ -421,130 +425,79 @@
         </p>
       </div>
 
-      <div class="skills-layout">
-
-        <!-- LEFT: TEXT -->
-        <div class="skills-content">
 
           <p class="skills-lead">
             I believe in using the right tool for the job. My approach combines established technologies with modern frameworks to build efficient solutions.
           </p>
 
-          <p>
+
+  <div class="container">
+      <p style="margin-bottom: 12px;text-align: center;font-size: smaller;">
+        Technologies I use daily. Click any skill for quick info.
+      </p>
+
+    <!-- Skills Grid -->
+    <div class="skills-grid">
+      <!-- All skills will be added dynamically -->
+    </div>
+              <p>
             I'm constantly learning and adapting to new technologies while maintaining strong fundamentals in computer science and software engineering principles.
           </p>
 
-          <div class="skills-cta">
+                          <div class="skills-cta" style="margin-top: 16px;">
             <a href="https://github.com/Yeabtsega-Tesfaye" target="_blank" class="btn btn-outline">
               <i class="fab fa-github"></i>
               View GitHub
             </a>
           </div>
-
-        </div>
-
-        <!-- RIGHT: SKILL GROUPS -->
-        <div class="skills-groups">
-
-          <!-- GROUP -->
-          <div class="skill-group">
-            <h3 class="group-title">
-              <i class="fas fa-laptop-code"></i>
-              Languages
-            </h3>
-
-            <ul class="skill-list">
-              <li>
-                <i class="fab fa-cuttlefish"></i>
-                <span class="skill-name">C++</span>
-                <span class="skill-level">Intermediate</span>
-              </li>
-              <li>
-                <i class="fab fa-java"></i>
-                <span class="skill-name">Java</span>
-                <span class="skill-level">Intermediate</span>
-              </li>
-              <li>
-                <i class="fab fa-js"></i>
-                <span class="skill-name">JavaScript</span>
-                <span class="skill-level">Advanced</span>
-              </li>
-              <li>
-                <i class="fab fa-php"></i>
-                <span class="skill-name">PHP</span>
-                <span class="skill-level">Intermediate</span>
-              </li>
-            </ul>
-          </div>
-
-          <!-- GROUP -->
-          <div class="skill-group">
-            <h3 class="group-title">
-              <i class="fas fa-cogs"></i>
-              Frameworks & Tools
-            </h3>
-
-            <ul class="skill-list">
-              <li>
-                <i class="fab fa-react"></i>
-                <span class="skill-name">React</span>
-                <span class="skill-level">Advanced</span>
-              </li>
-              <li>
-                <i class="fab fa-node-js"></i>
-                <span class="skill-name">Node.js</span>
-                <span class="skill-level">Intermediate</span>
-              </li>
-              <li>
-                <i class="fas fa-bolt"></i>
-                <span class="skill-name">Express.js</span>
-                <span class="skill-level">Intermediate</span>
-              </li>
-              <li>
-                <i class="fab fa-npm"></i>
-                <span class="skill-name">npm</span>
-                <span class="skill-level">Intermediate</span>
-              </li>
-            </ul>
-          </div>
-
-          <!-- GROUP -->
-          <div class="skill-group">
-            <h3 class="group-title">
-              <i class="fas fa-database"></i>
-              Databases & Systems
-            </h3>
-
-            <ul class="skill-list">
-              <li>
-                <i class="fas fa-database"></i>
-                <span class="skill-name">MySQL</span>
-                <span class="skill-level">Intermediate</span>
-              </li>
-              <li>
-                <i class="fas fa-database"></i>
-                <span class="skill-name">MongoDB</span>
-                <span class="skill-level">Intermediate</span>
-              </li>
-              <li>
-                <i class="fab fa-linux"></i>
-                <span class="skill-name">Linux</span>
-                <span class="skill-level">Intermediate</span>
-              </li>
-              <li>
-                <i class="fas fa-microchip"></i>
-                <span class="skill-name">Assembly</span>
-                <span class="skill-level">Basic</span>
-              </li>
-            </ul>
-          </div>
+  </div>
 
         </div>
 
       </div>
 
-    </div>
+
   </section>
+
+<!-- ===================== SKILLS SECTION ===================== -->
+
+
+<!-- Skill Popup - Fixed position, no scroll -->
+<div class="skill-popup" id="skillPopup">
+  <div class="popup-overlay"></div>
+  <div class="popup-card">
+    <button class="popup-close">&times;</button>
+    
+    <div class="popup-header">
+      <div class="popup-icon" id="popupIcon">
+        <i class="fab fa-js"></i>
+      </div>
+      <div>
+        <h3 id="popupTitle">JavaScript</h3>
+        <span class="skill-cat" id="popupCategory">Language</span>
+      </div>
+    </div>
+
+    <div class="popup-body">
+      <p id="popupDescription">Primary language for modern web development</p>
+      
+      <div class="popup-stats">
+        <div class="popup-stat">
+          <i class="fas fa-clock"></i>
+          <span id="popupExperience">3+ years</span>
+        </div>
+        <div class="popup-stat">
+          <i class="fas fa-fire"></i>
+          <span id="popupLevel">Daily Use</span>
+        </div>
+      </div>
+      
+      <a href="#" class="popup-btn" id="popupGithub" target="_blank">
+        <i class="fab fa-github"></i> View Examples on GitHub
+      </a>
+    </div>
+  </div>
+</div>
 
   <!-- ===================== PORTFOLIO SECTION ===================== -->
   <section id="projects" class="section portfolio">
@@ -686,10 +639,11 @@
             Get in Touch
           </h4>
           <p class="footer-text">Have a project idea or want to collaborate? Give me a call!</p>
-          <a href="tel : +251914602982" class="footer-link btn">
-            <i class="fas fa-phone"></i>
-            +251-914-602-982
-          </a>
+<a href="tel:+251914602982" aria-label="Call Yeabtsega" class="footer-link btn">
+  <i class="fas fa-phone"></i>
+  Call me
+</a>
+
         </div>
 
         <!-- LOCATION -->

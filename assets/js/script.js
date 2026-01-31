@@ -662,22 +662,12 @@ window.addEventListener('load', function() {
 
 // ================= TERMINAL WELCOME =================
 function initTerminal() {
+  document.documentElement.classList.add('terminal-open');
   const terminalOverlay = document.getElementById('terminalOverlay');
   const terminalContent = document.querySelector('.terminal-content');
   const typingCommand = document.getElementById('typingCommand');
   const skipButton = document.getElementById('skipTerminal');
   
-  // Check if user has seen terminal before
-  const hasSeenTerminal = localStorage.getItem('terminalSeen') === 'true';
-  
-  // Skip if already seen (optional - you can remove this if you want it to show every time)
-  if (hasSeenTerminal) {
-    terminalOverlay.classList.add('hidden');
-    setTimeout(() => {
-      terminalOverlay.style.display = 'none';
-    }, 800);
-    return;
-  }
   
   // Terminal configuration
   const terminalConfig = {
@@ -1024,6 +1014,8 @@ Type <span class="accent">help</span> for available commands.
     
     // Add closing animation
     terminalOverlay.classList.add('hidden');
+    document.documentElement.classList.remove('terminal-open');
+
     
     // Remove from DOM after animation
     setTimeout(() => {
@@ -1575,7 +1567,7 @@ class CompleteSoundSystem {
         'img:not(.hero-image)', '.image-layer', '.img-holder',
         'li', '.skill-list li', '.service-points li', '.social-list li',
         '.about-content p', '.about-lead', '.image-stack',
-        '.footer-card', '.footer-link',
+        '.footer-card', '.footer-link', '.skill-card',
         '.rain-toggle', '.intensity-btn',
         '.terminal-controls button', '.btn-skip'
       ];
@@ -1702,13 +1694,11 @@ setupTerminalTypingSounds() {
         this.soundToggle.classList.remove('active');
         if (icon) {
           icon.className = 'fas fa-volume-mute';
-          icon.style.color = 'var(--accent)';
         }
       } else {
         this.soundToggle.classList.add('active');
         if (icon) {
           icon.className = 'fas fa-volume-up';
-          icon.style.color = '#00ffff';
         }
       }
     }
@@ -1766,4 +1756,354 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // Your existing code continues...
+});
+
+// Skills with Popup - Complete
+document.addEventListener('DOMContentLoaded', function() {
+    // ALL your skills from badges plus extras
+const allSkills = [
+    // Languages
+    {
+        name: 'JavaScript',
+        icon: 'devicon-javascript-plain colored',
+        category: 'Language',
+        description: 'The language I live in; turning ideas into interactive apps.',
+        experience: '3+ years',
+        level: 'Daily use',
+        github: 'https://github.com/Yeabtsega-Tesfaye?q=javascript'
+    },
+    {
+        name: 'TypeScript',
+        icon: 'devicon-typescript-plain colored',
+        category: 'Language',
+        description: 'Typed JavaScript that keeps my code sane and scalable.',
+        experience: '1 year',
+        level: 'Comfortable',
+        github: 'https://github.com/Yeabtsega-Tesfaye?q=typescript'
+    },
+    {
+        name: 'C++',
+        icon: 'devicon-cplusplus-plain colored',
+        category: 'Language',
+        description: 'For when performance and control really matter.',
+        experience: '2+ years',
+        level: 'Comfortable',
+        github: 'https://github.com/Yeabtsega-Tesfaye?q=c%2B%2B'
+    },
+    {
+        name: 'Java',
+        icon: 'devicon-java-plain colored',
+        category: 'Language',
+        description: 'OOP ninja skills for Android and big apps.',
+        experience: '2+ years',
+        level: 'Exploring',
+        github: 'https://github.com/Yeabtsega-Tesfaye?q=java'
+    },
+    {
+        name: 'PHP',
+        icon: 'devicon-php-plain colored',
+        category: 'Language',
+        description: 'Server-side magic for web projects.',
+        experience: '2+ years',
+        level: 'Comfortable',
+        github: 'https://github.com/Yeabtsega-Tesfaye?q=php'
+    },
+    
+    // Frontend
+    {
+        name: 'HTML5',
+        icon: 'devicon-html5-plain colored',
+        category: 'Frontend',
+        description: 'Building solid structure for every project I touch.',
+        experience: '3+ years',
+        level: 'Daily use',
+        github: 'https://github.com/Yeabtsega-Tesfaye?q=html'
+    },
+    {
+        name: 'CSS3',
+        icon: 'devicon-css3-plain colored',
+        category: 'Frontend',
+        description: 'Pixel-perfect styling and smooth animations.',
+        experience: '3+ years',
+        level: 'Daily use',
+        github: 'https://github.com/Yeabtsega-Tesfaye?q=css'
+    },
+    {
+        name: 'React',
+        icon: 'devicon-react-plain colored',
+        category: 'Frontend',
+        description: 'Turning messy UI ideas into neat, reusable components.',
+        experience: '2+ years',
+        level: 'Daily use',
+        github: 'https://github.com/Yeabtsega-Tesfaye?q=react'
+    },
+    {
+        name: 'Tailwind CSS',
+        icon: 'devicon-tailwindcss-plain colored',
+        category: 'Frontend',
+        description: 'Rapid styling wizardry without leaving HTML.',
+        experience: '1+ year',
+        level: 'Comfortable',
+        github: 'https://github.com/Yeabtsega-Tesfaye?q=tailwind'
+    },
+    
+    // Backend
+    {
+        name: 'Node.js',
+        icon: 'devicon-nodejs-plain colored',
+        category: 'Backend',
+        description: 'JS backend power; APIs and services made simple.',
+        experience: '2+ years',
+        level: 'Daily use',
+        github: 'https://github.com/Yeabtsega-Tesfaye?q=node'
+    },
+    {
+        name: 'Express.js',
+        icon: 'devicon-express-original colored',
+        category: 'Backend',
+        description: 'Minimalist framework, maximum flexibility.',
+        experience: '2+ years',
+        level: 'Daily use',
+        github: 'https://github.com/Yeabtsega-Tesfaye?q=express'
+    },
+    
+    // Databases
+    {
+        name: 'MySQL',
+        icon: 'devicon-mysql-plain colored',
+        category: 'Database',
+        description: 'Structured, fast, reliable data storage.',
+        experience: '2+ years',
+        level: 'Daily use',
+        github: 'https://github.com/Yeabtsega-Tesfaye?q=mysql'
+    },
+    {
+        name: 'MongoDB',
+        icon: 'devicon-mongodb-plain colored',
+        category: 'Database',
+        description: 'Flexible, modern NoSQL playground.',
+        experience: '1.5 years',
+        level: 'Comfortable',
+        github: 'https://github.com/Yeabtsega-Tesfaye?q=mongodb'
+    },
+    {
+        name: 'SQL',
+        icon: 'fas fa-database',
+        category: 'Database',
+        description: 'Query master for any database I touch.',
+        experience: '2+ years',
+        level: 'Daily use',
+        github: 'https://github.com/Yeabtsega-Tesfaye?q=sql'
+    },
+    
+    // Tools & Systems
+    {
+        name: 'Git',
+        icon: 'devicon-git-plain colored',
+        category: 'Tool',
+        description: 'Version control like a boss.',
+        experience: '3+ years',
+        level: 'Daily use',
+        github: 'https://github.com/Yeabtsega-Tesfaye'
+    },
+    {
+        name: 'Linux',
+        icon: 'devicon-linux-plain',
+        category: 'Tool',
+        description: 'Command line playground and server control.',
+        experience: '2+ years',
+        level: 'Comfortable',
+        github: 'https://github.com/Yeabtsega-Tesfaye?q=linux'
+    },
+    {
+        name: 'npm',
+        icon: 'devicon-npm-original-wordmark colored',
+        category: 'Tool',
+        description: 'Managing JS packages like a pro.',
+        experience: '3+ years',
+        level: 'Daily use',
+        github: 'https://github.com/Yeabtsega-Tesfaye'
+    },
+    {
+        name: 'VS Code',
+        icon: 'devicon-vscode-plain colored',
+        category: 'Tool',
+        description: 'My coding cockpit for everything.',
+        experience: '3+ years',
+        level: 'Daily use',
+        github: '#'
+    },
+    {
+        name: 'GitHub',
+        icon: 'devicon-github-plain',
+        category: 'Tool',
+        description: 'Collaboration hub and code HQ.',
+        experience: '3+ years',
+        level: 'Daily use',
+        github: 'https://github.com/Yeabtsega-Tesfaye'
+    },
+    
+    // AI Tools
+    {
+        name: 'ChatGPT',
+        icon: 'assets/icons/chatgpt-icon.svg',
+        category: 'AI Tool',
+        description: 'My AI partner for coding, debugging, and brainstorming.',
+        experience: '3+ year',
+        level: 'Daily use',
+        github: '#'
+    },
+    {
+        name: 'GitHub Copilot',
+        icon: 'assets/icons/github-copilot-icon.svg',
+        category: 'AI Tool',
+        description: 'AI coding buddy that speeds up the grind.',
+        experience: '1+ year',
+        level: 'Comfortable',
+        github: 'https://github.com/Yeabtsega-Tesfaye'
+    },
+    {
+        name: 'Cursor',
+        icon: 'assets/icons/cursor-ai-code-icon.svg',
+        category: 'AI Tool',
+        description: 'Smart editor AI to keep code neat and fast.',
+        experience: '6 months',
+        level: 'Exploring',
+        github: '#'
+    },
+    {
+        name: 'Claude',
+        icon: 'assets/icons/claude-ai-icon.svg',
+        category: 'AI Tool',
+        description: 'AI brain for complex problems and ideas.',
+        experience: '6 months',
+        level: 'Exploring',
+        github: '#'
+    },
+    
+    // DevOps / Cloud
+    {
+        name: 'Docker',
+        icon: 'devicon-docker-plain colored',
+        category: 'DevOps',
+        description: 'Containers make my dev life painless.',
+        experience: '1 year',
+        level: 'Comfortable',
+        github: 'https://github.com/Yeabtsega-Tesfaye?q=docker'
+    },
+    {
+        name: 'AWS',
+        icon: 'devicon-amazonwebservices-plain colored',
+        category: 'Cloud',
+        description: 'Cloud playground for deploying and scaling apps.',
+        experience: '1 year',
+        level: 'Comfortable',
+        github: 'https://github.com/Yeabtsega-Tesfaye?q=aws'
+    },
+    {
+        name: 'REST API',
+        icon: 'assets/icons/rest-api-icon.svg',
+        category: 'Backend',
+        description: 'Crafting clean endpoints for frontends to love.',
+        experience: '2+ years',
+        level: 'Daily use',
+        github: 'https://github.com/Yeabtsega-Tesfaye?q=api'
+    },
+    {
+        name: 'JSON',
+        icon: 'devicon-json-plain colored',
+        category: 'Data',
+        description: 'Data interchange format for web applications.',
+        experience: '3+ years',
+        level: 'Daily use',
+        github: '#'
+    }
+];
+
+    // Initialize
+    createSkillsGrid();
+    setupPopup();
+
+    function createSkillsGrid() {
+        const grid = document.querySelector('.skills-grid');
+        if (!grid) return;
+        
+grid.innerHTML = allSkills.map(skill => {
+    // Check if it's an SVG path
+    const iconHTML = skill.icon.includes('.svg') 
+        ? `<img src="${skill.icon}" alt="${skill.name}" class="skill-svg-icon">`
+        : `<i class="${skill.icon}"></i>`;
+    
+    return `
+        <div class="skill-card" data-skill="${skill.name.toLowerCase()}">
+            <div class="skill-icon">
+                ${iconHTML}
+            </div>
+            <div class="skill-name">${skill.name}</div>
+        </div>
+    `;
+}).join('');
+        
+        // Add click handlers
+        document.querySelectorAll('.skill-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const skillName = this.dataset.skill;
+                openSkillPopup(skillName);
+            });
+        });
+    }
+
+    function setupPopup() {
+        const popup = document.getElementById('skillPopup');
+        const closeBtn = document.querySelector('.popup-close');
+        
+        // Close button
+        closeBtn.addEventListener('click', closePopup);
+        
+        // Close on overlay click
+        popup.addEventListener('click', function(e) {
+            if (e.target.classList.contains('popup-overlay')) {
+                closePopup();
+            }
+        });
+        
+        // Close on ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && popup.classList.contains('active')) {
+                closePopup();
+            }
+        });
+    }
+
+    function openSkillPopup(skillName) {
+        const skill = allSkills.find(s => s.name.toLowerCase() === skillName) || allSkills[0];
+        const popup = document.getElementById('skillPopup');
+        
+        // Update popup content
+        document.getElementById('popupTitle').textContent = skill.name;
+        if (skill.icon.includes('.svg')) {
+            document.getElementById('popupIcon').innerHTML = `<img src="${skill.icon}" alt="${skill.name}" class="skill-svg-icon-pop">`;
+        } else {
+            document.getElementById('popupIcon').innerHTML = `<i class="${skill.icon}"></i>`;
+        }
+        document.getElementById('popupCategory').textContent = skill.category;
+        document.getElementById('popupDescription').textContent = skill.description;
+        document.getElementById('popupExperience').textContent = skill.experience;
+        document.getElementById('popupLevel').textContent = skill.level;
+        document.getElementById('popupGithub').href = skill.github;
+        
+        // Show popup and disable body scroll
+        popup.classList.add('active');
+        document.body.classList.add('popup-active');
+        document.documentElement.classList.add('popup-open');
+    }
+
+    function closePopup() {
+        const popup = document.getElementById('skillPopup');
+        popup.classList.remove('active');
+        document.body.classList.remove('popup-active');
+        document.documentElement.classList.remove('popup-open');
+    }
+
+    
 });
