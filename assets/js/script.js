@@ -660,445 +660,6 @@ window.addEventListener('load', function() {
   document.body.classList.add('loaded');
 });
 
-// ================= TERMINAL WELCOME =================
-function initTerminal() {
-  document.documentElement.classList.add('terminal-open');
-  const terminalOverlay = document.getElementById('terminalOverlay');
-  const terminalContent = document.querySelector('.terminal-content');
-  const typingCommand = document.getElementById('typingCommand');
-  const skipButton = document.getElementById('skipTerminal');
-  
-  
-  // Terminal configuration
-  const terminalConfig = {
-    typingSpeed: 50, // ms per character
-    lineDelay: 800, // ms between lines
-    commandDelay: 1200, // ms before showing output
-    cursorBlinkSpeed: 500,
-    showSkipAfter: 10000 // ms before skip button appears
-  };
-  
-  // Terminal commands and responses
-  const terminalScript = [
-    {
-      command: "whoami",
-      output: "silentCompiler",
-      delay: 800
-    },
-    {
-      command: "cat about.txt",
-      output: "Software Engineer & Full-Stack Developer\nBuilding robust, scalable applications\n3+ Years Experience",
-      delay: 1000
-    },
-    {
-      command: "ls skills/",
-      output: "<span class='dir'>backend/</span>  <span class='dir'>frontend/</span>  <span class='dir'>databases/</span>  <span class='file'>tools.js</span>",
-      delay: 800
-    },
-    {
-      command: "npm start portfolio",
-      output: "> Starting portfolio server...\n> Portfolio ready at <span class='accent'>https://yeab-tsega.netlify.app</span>\n> Press <kbd>Enter</kbd> to continue...",
-      delay: 1200
-    }
-  ];
-  
-  // Create typing effect
-  function typeText(element, text, speed, callback) {
-    let i = 0;
-    element.textContent = '';
-    
-    function typeChar() {
-      if (i < text.length) {
-        element.textContent += text.charAt(i);
-        i++;
-        setTimeout(typeChar, speed);
-      } else if (callback) {
-        setTimeout(callback, 100);
-      }
-    }
-    
-    typeChar();
-  }
-  
-  // Add line to terminal
-  function addTerminalLine(command, output, isLast = false) {
-    return new Promise((resolve) => {
-      // Create command line
-      const lineDiv = document.createElement('div');
-      lineDiv.className = 'terminal-line';
-      
-      const promptSpan = document.createElement('span');
-      promptSpan.className = 'prompt';
-      promptSpan.textContent = '$';
-      
-      const commandSpan = document.createElement('span');
-      commandSpan.className = 'command';
-      
-      lineDiv.appendChild(promptSpan);
-      lineDiv.appendChild(commandSpan);
-      
-      // Insert before the active line
-      const activeLine = document.querySelector('.active-line');
-      terminalContent.insertBefore(lineDiv, activeLine);
-      
-      // Type the command
-      typeText(commandSpan, command, terminalConfig.typingSpeed, () => {
-        // Add output after delay
-        setTimeout(() => {
-          if (output) {
-            const outputDiv = document.createElement('div');
-            outputDiv.className = 'terminal-output';
-            outputDiv.innerHTML = output;
-            terminalContent.insertBefore(outputDiv, activeLine);
-            
-            // Scroll to bottom
-            terminalContent.parentElement.scrollTop = terminalContent.parentElement.scrollHeight;
-          }
-          
-          resolve();
-        }, terminalConfig.commandDelay);
-      });
-    });
-  }
-  
-  // Run terminal script
-  async function runTerminalScript() {
-    // Clear initial static content
-    const initialLines = document.querySelectorAll('.terminal-line:not(.active-line), .terminal-output');
-    initialLines.forEach(line => line.remove());
-    
-    // Start typing sequence
-    for (let i = 0; i < terminalScript.length; i++) {
-      const item = terminalScript[i];
-      const isLast = i === terminalScript.length - 1;
-      
-      await addTerminalLine(item.command, item.output, isLast);
-      
-      // Delay between commands (except for last one)
-      if (!isLast) {
-        await new Promise(resolve => setTimeout(resolve, terminalConfig.lineDelay));
-      }
-    }
-    
-    // After script completes, enable keyboard interaction
-    enableTerminalInteraction();
-  }
-  
-  // Enable keyboard commands
-  function enableTerminalInteraction() {
-    const commandHistory = [];
-    let historyIndex = -1;
-    
-    // Focus on terminal
-    terminalOverlay.focus();
-    
-    // Listen for keyboard input
-    document.addEventListener('keydown', handleKeyPress);
-    
-    function handleKeyPress(e) {
-      // Enter key to continue
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        closeTerminal();
-        return;
-      }
-      
-      // Escape key to skip
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        closeTerminal();
-        return;
-      }
-      
-      // Tab key for autocomplete (optional feature)
-      if (e.key === 'Tab') {
-        e.preventDefault();
-        autoCompleteCommand();
-        return;
-      }
-      
-      // Arrow up/down for command history
-      if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
-        e.preventDefault();
-        navigateHistory(e.key === 'ArrowUp' ? -1 : 1);
-        return;
-      }
-      
-      // Typing in command line (only letters, numbers, spaces, and special chars)
-      if (e.key.length === 1 || e.key === 'Backspace' || e.key === ' ') {
-        updateTypingCommand(e);
-      }
-    }
-    
-    function updateTypingCommand(e) {
-      if (e.key === 'Backspace') {
-        typingCommand.textContent = typingCommand.textContent.slice(0, -1);
-      } else if (e.key.length === 1 || e.key === ' ') {
-        typingCommand.textContent += e.key;
-      }
-    }
-    
-    function autoCompleteCommand() {
-      const commonCommands = ['help', 'clear', 'projects', 'skills', 'contact', 'exit'];
-      const currentText = typingCommand.textContent.toLowerCase();
-      
-      const matches = commonCommands.filter(cmd => cmd.startsWith(currentText));
-      if (matches.length === 1) {
-        typingCommand.textContent = matches[0];
-      }
-    }
-    
-    function navigateHistory(direction) {
-      if (commandHistory.length === 0) return;
-      
-      historyIndex = Math.max(0, Math.min(commandHistory.length - 1, historyIndex + direction));
-      
-      if (historyIndex >= 0 && historyIndex < commandHistory.length) {
-        typingCommand.textContent = commandHistory[historyIndex];
-      }
-    }
-    
-    // Add command execution
-    function executeCommand(cmd) {
-      commandHistory.push(cmd);
-      historyIndex = commandHistory.length;
-      
-      switch (cmd.toLowerCase()) {
-        case 'help':
-          showHelp();
-          break;
-        case 'clear':
-          clearTerminal();
-          break;
-        case 'projects':
-          showProjects();
-          break;
-        case 'skills':
-          showSkills();
-          break;
-        case 'contact':
-          showContact();
-          break;
-        case 'exit':
-          closeTerminal();
-          break;
-        default:
-          showUnknownCommand(cmd);
-      }
-    }
-    
-    function showHelp() {
-      const helpOutput = `
-Available commands:
-• <span class="accent">help</span> - Show this help message
-• <span class="accent">projects</span> - View my projects
-• <span class="accent">skills</span> - View my technical skills
-• <span class="accent">contact</span> - Get my contact info
-• <span class="accent">clear</span> - Clear terminal
-• <span class="accent">exit</span> - Close terminal and view portfolio
-      `;
-      addOutputToTerminal(helpOutput);
-    }
-    
-    function showProjects() {
-      const projectsOutput = `
-My recent projects:
-• <span class="accent">Perfue</span> - Perfume E-commerce Website
-• <span class="accent">EarPods Max</span> - Product Landing Page
-• <span class="accent">Glowing</span> - Cosmetics E-commerce
-• <span class="accent">Cheffood</span> - Food Delivery Platform
-
-Type <span class="accent">exit</span> to view them in detail.
-      `;
-      addOutputToTerminal(projectsOutput);
-    }
-    
-    function showSkills() {
-      const skillsOutput = `
-Technical Stack:
-• <span class="dir">Languages:</span> JavaScript, Java, C++, PHP
-• <span class="dir">Frontend:</span> React, HTML5, CSS3
-• <span class="dir">Backend:</span> Node.js, Express.js
-• <span class="dir">Databases:</span> MySQL, MongoDB
-• <span class="dir">Tools:</span> Git, Linux, npm
-      `;
-      addOutputToTerminal(skillsOutput);
-    }
-    
-    function showContact() {
-      const contactOutput = `
-Get in touch:
-• <span class="accent">GitHub:</span> github.com/Yeabtsega-Tesfaye
-• <span class="accent">LinkedIn:</span> linkedin.com/in/dev-yeabtsega
-• <span class="accent">Telegram:</span> t.me/Confidential_boy
-• <span class="accent">Phone:</span> +251-914-602-982
-
-Type <span class="accent">exit</span> to view full contact section.
-      `;
-      addOutputToTerminal(contactOutput);
-    }
-    
-    function showUnknownCommand(cmd) {
-      const unknownOutput = `
-<span class="error">Command not found:</span> ${cmd}
-Type <span class="accent">help</span> for available commands.
-      `;
-      addOutputToTerminal(unknownOutput);
-    }
-    
-    function clearTerminal() {
-      const allLines = document.querySelectorAll('.terminal-line:not(.active-line), .terminal-output');
-      allLines.forEach(line => line.remove());
-      typingCommand.textContent = '';
-    }
-    
-    function addOutputToTerminal(output) {
-      const outputDiv = document.createElement('div');
-      outputDiv.className = 'terminal-output';
-      outputDiv.innerHTML = output;
-      
-      const activeLine = document.querySelector('.active-line');
-      terminalContent.insertBefore(outputDiv, activeLine);
-      
-      // Clear command line
-      typingCommand.textContent = '';
-      
-      // Scroll to bottom
-      terminalContent.parentElement.scrollTop = terminalContent.parentElement.scrollHeight;
-    }
-    
-    // Enable command execution on Enter
-    const originalHandleKeyPress = handleKeyPress;
-    document.removeEventListener('keydown', handleKeyPress);
-    
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && typingCommand.textContent.trim()) {
-        e.preventDefault();
-        const cmd = typingCommand.textContent.trim();
-        
-        // Create command line
-        const lineDiv = document.createElement('div');
-        lineDiv.className = 'terminal-line';
-        
-        const promptSpan = document.createElement('span');
-        promptSpan.className = 'prompt';
-        promptSpan.textContent = '$';
-        
-        const commandSpan = document.createElement('span');
-        commandSpan.className = 'command';
-        commandSpan.textContent = cmd;
-        
-        lineDiv.appendChild(promptSpan);
-        lineDiv.appendChild(commandSpan);
-        
-        const activeLine = document.querySelector('.active-line');
-        terminalContent.insertBefore(lineDiv, activeLine);
-        
-        // Execute command
-        executeCommand(cmd);
-        
-        // Clear typing line
-        typingCommand.textContent = '';
-        
-        // Scroll to bottom
-        terminalContent.parentElement.scrollTop = terminalContent.parentElement.scrollHeight;
-      } else {
-        originalHandleKeyPress(e);
-      }
-    });
-  }
-
-  // Close terminal
-  function closeTerminal() {
-    // Mark as seen
-    
-    // Add closing animation
-    terminalOverlay.classList.add('hidden');
-    document.documentElement.classList.remove('terminal-open');
-
-    
-    // Remove from DOM after animation
-    setTimeout(() => {
-      terminalOverlay.style.display = 'none';
-      document.removeEventListener('keydown', handleKeyPress);
-      
-      // Trigger portfolio entrance animations
-      document.body.classList.add('portfolio-loaded');
-      
-      // Optional: Play a sound effect
-      playTerminalSound('close');
-    }, 800);
-
-
-  }
-  
-  // Sound effects (optional)
-  function playTerminalSound(type) {
-    // You can add sound effects here if desired
-    // Example: using Web Audio API for simple beeps
-    if (typeof AudioContext !== 'undefined') {
-      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-      
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-      
-      oscillator.type = 'sine';
-      
-      if (type === 'type') {
-        oscillator.frequency.value = 800;
-        gainNode.gain.value = 0.1;
-        oscillator.start();
-        setTimeout(() => oscillator.stop(), 50);
-      } else if (type === 'close') {
-        oscillator.frequency.value = 600;
-        gainNode.gain.value = 0.1;
-        gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.3);
-        oscillator.start();
-        setTimeout(() => oscillator.stop(), 300);
-      }
-    }
-  }
-  
-  // Event listeners
-  skipButton.addEventListener('click', closeTerminal);
-  
-  // Close button functionality
-  document.querySelector('.control.close').addEventListener('click', closeTerminal);
-  
-  // Minimize button (optional feature)
-  document.querySelector('.control.minimize').addEventListener('click', () => {
-    terminalOverlay.classList.add('minimized');
-    // You could add a notification that terminal is minimized
-  });
-  
-  // Maximize button
-  document.querySelector('.control.maximize').addEventListener('click', () => {
-    terminalOverlay.classList.toggle('fullscreen');
-  });
-  
-  // Auto-show skip button after delay
-  setTimeout(() => {
-    skipButton.style.opacity = '1';
-    skipButton.style.visibility = 'visible';
-  }, terminalConfig.showSkipAfter);
-  
-  // Start the terminal animation after a brief delay
-  setTimeout(() => {
-    runTerminalScript();
-  }, 1000);
-  
-  // Make terminal focusable
-  terminalOverlay.tabIndex = -1;
-  terminalOverlay.focus();
-}
-
-// Initialize terminal when DOM is loaded
-initTerminal();
-
-
-
 // ================= MAGNETIC BUTTONS (DESKTOP ONLY) =================
 function initMagneticButtons() {
   // Don't initialize on mobile
@@ -1416,11 +977,10 @@ document.addEventListener('visibilitychange', () => {
   }
 });
 
-// ================= COMPLETE SOUND SYSTEM - ULTIMATE FIX =================
 class CompleteSoundSystem {
   constructor() {
     this.audioContext = null;
-    this.muted = true; // Start muted
+    this.muted = false; // Start muted
     this.initialized = false;
     this.sounds = {};
     this.terminalClosed = false;
@@ -1637,29 +1197,29 @@ class CompleteSoundSystem {
     }, 1000);
   }
   
-setupTerminalTypingSounds() {
-  const terminal = document.querySelector('.terminal-overlay');
-  
-  if (!terminal) return;
-  
-  // Play keyboard sound for ANY click in terminal
-  terminal.addEventListener('click', () => {
-    if (!this.terminalClosed) {
-      this.sounds.keyboard();
-    }
-  });
-  
-  // Also play for global key presses when terminal is visible
-  document.addEventListener('keydown', (e) => {
-    if (!this.terminalClosed && 
-        terminal.style.display !== 'none' &&
-        terminal.style.opacity !== '0') {
-      this.sounds.keyboard();
-    }
-  });
-  
-  console.log('⌨️ Terminal sounds: Click anywhere in terminal for keyboard sound');
-}
+  setupTerminalTypingSounds() {
+    const terminal = document.querySelector('.terminal-overlay');
+    
+    if (!terminal) return;
+    
+    // Play keyboard sound for ANY click in terminal
+    terminal.addEventListener('click', () => {
+      if (!this.terminalClosed) {
+        this.sounds.keyboard();
+      }
+    });
+    
+    // Also play for global key presses when terminal is visible
+    document.addEventListener('keydown', (e) => {
+      if (!this.terminalClosed && 
+          terminal.style.display !== 'none' &&
+          terminal.style.opacity !== '0') {
+        this.sounds.keyboard();
+      }
+    });
+    
+    console.log('⌨️ Terminal sounds: Click anywhere in terminal for keyboard sound');
+  }
   
   canPlaySound() {
     return this.audioContext && !this.muted && this.initialized;
@@ -1675,13 +1235,23 @@ setupTerminalTypingSounds() {
   }
   
   toggleMute() {
+    // Resume audio context if it's suspended
+    if (this.audioContext && this.audioContext.state === 'suspended') {
+      this.audioContext.resume();
+    }
+    
     this.muted = !this.muted;
     localStorage.setItem('soundMuted', this.muted);
     this.updateToggleUI();
     
     // Play click sound when turning ON
-    if (!this.muted && this.sounds.click) {
-      setTimeout(() => this.sounds.click(), 50);
+    if (!this.muted && this.sounds.click && this.initialized) {
+      // Small delay to ensure context is resumed
+      setTimeout(() => {
+        if (this.canPlaySound()) {
+          this.sounds.click();
+        }
+      }, 100);
     }
   }
   
@@ -1710,8 +1280,8 @@ setupTerminalTypingSounds() {
     
     // Default to muted if no preference saved
     if (savedMute === null) {
-      this.muted = true; // Default to muted
-      localStorage.setItem('soundMuted', 'true');
+      this.muted = false; // Default to muted
+      localStorage.setItem('soundMuted', 'false');
     } else {
       this.muted = savedMute === 'true';
     }
@@ -1729,33 +1299,430 @@ setupTerminalTypingSounds() {
   }
 }
 
-// ================= INITIALIZE =================
-document.addEventListener('DOMContentLoaded', function() {
-  const soundSystem = new CompleteSoundSystem();
-  window.soundSystem = soundSystem;
-  
-  // Terminal skip (backup)
-  const skipTerminal = document.getElementById('skipTerminal');
+// ================= TERMINAL WELCOME =================
+function initTerminal() {
+  document.documentElement.classList.add('terminal-open');
   const terminalOverlay = document.getElementById('terminalOverlay');
+  const terminalContent = document.querySelector('.terminal-content');
+  const typingCommand = document.getElementById('typingCommand');
+  const skipButton = document.getElementById('skipTerminal');
   
-  if (skipTerminal && terminalOverlay) {
-    skipTerminal.addEventListener('click', function(e) {
-      e.preventDefault();
-      
-      if (soundSystem.sounds.click) {
-        soundSystem.sounds.click();
+  // Terminal configuration
+  const terminalConfig = {
+    typingSpeed: 50, // ms per character
+    lineDelay: 800, // ms between lines
+    commandDelay: 1200, // ms before showing output
+    cursorBlinkSpeed: 500,
+    showSkipAfter: 10000 // ms before skip button appears
+  };
+  
+  // Terminal commands and responses
+  const terminalScript = [
+    {
+      command: "whoami",
+      output: "silentCompiler",
+      delay: 800
+    },
+    {
+      command: "cat about.txt",
+      output: "Software Engineer & Full-Stack Developer\nBuilding robust, scalable applications\n3+ Years Experience",
+      delay: 1000
+    },
+    {
+      command: "ls skills/",
+      output: "<span class='dir'>backend/</span>  <span class='dir'>frontend/</span>  <span class='dir'>databases/</span>  <span class='file'>tools.js</span>",
+      delay: 800
+    },
+    {
+      command: "npm start portfolio",
+      output: "> Starting portfolio server...\n> Portfolio ready at <span class='accent'>https://yeab-tsega.netlify.app</span>\n> Press <kbd>Enter</kbd> to continue...",
+      delay: 1200
+    }
+  ];
+  
+  // Create typing effect
+  function typeText(element, text, speed, callback) {
+    let i = 0;
+    element.textContent = '';
+    
+    function typeChar() {
+      if (i < text.length) {
+        element.textContent += text.charAt(i);
+        i++;
+        
+        // Play typing sound for each character
+        if (window.completeSoundSystem && 
+            window.completeSoundSystem.canPlaySound() && 
+            !window.completeSoundSystem.terminalClosed) {
+          // Play sound only for certain characters to make it sound natural
+          if (i % 2 === 0 && window.completeSoundSystem.sounds.keyboard) {
+            // Add small random delay to prevent overwhelming
+            setTimeout(() => {
+              window.completeSoundSystem.sounds.keyboard();
+            }, Math.random() * 10);
+          }
+        }
+        
+        setTimeout(typeChar, speed);
+      } else if (callback) {
+        setTimeout(callback, 100);
       }
+    }
+    
+    typeChar();
+  }
+  
+  // Add line to terminal
+  function addTerminalLine(command, output, isLast = false) {
+    return new Promise((resolve) => {
+      // Create command line
+      const lineDiv = document.createElement('div');
+      lineDiv.className = 'terminal-line';
       
-      soundSystem.terminalClosed = true;
+      const promptSpan = document.createElement('span');
+      promptSpan.className = 'prompt';
+      promptSpan.textContent = '$';
       
-      terminalOverlay.style.opacity = '0';
-      setTimeout(() => {
-        terminalOverlay.style.display = 'none';
-      }, 500);
+      const commandSpan = document.createElement('span');
+      commandSpan.className = 'command';
+      
+      lineDiv.appendChild(promptSpan);
+      lineDiv.appendChild(commandSpan);
+      
+      // Insert before the active line
+      const activeLine = document.querySelector('.active-line');
+      terminalContent.insertBefore(lineDiv, activeLine);
+      
+      // Type the command
+      typeText(commandSpan, command, terminalConfig.typingSpeed, () => {
+        // Add output after delay
+        setTimeout(() => {
+          if (output) {
+            const outputDiv = document.createElement('div');
+            outputDiv.className = 'terminal-output';
+            outputDiv.innerHTML = output;
+            terminalContent.insertBefore(outputDiv, activeLine);
+            
+            // Scroll to bottom
+            terminalContent.parentElement.scrollTop = terminalContent.parentElement.scrollHeight;
+          }
+          
+          resolve();
+        }, terminalConfig.commandDelay);
+      });
     });
   }
   
-  // Your existing code continues...
+  // Run terminal script
+  async function runTerminalScript() {
+    // Clear initial static content
+    const initialLines = document.querySelectorAll('.terminal-line:not(.active-line), .terminal-output');
+    initialLines.forEach(line => line.remove());
+    
+    // Start typing sequence
+    for (let i = 0; i < terminalScript.length; i++) {
+      const item = terminalScript[i];
+      const isLast = i === terminalScript.length - 1;
+      
+      await addTerminalLine(item.command, item.output, isLast);
+      
+      // Delay between commands (except for last one)
+      if (!isLast) {
+        await new Promise(resolve => setTimeout(resolve, terminalConfig.lineDelay));
+      }
+    }
+    
+    // After script completes, enable keyboard interaction
+    enableTerminalInteraction();
+  }
+  
+  // Enable keyboard commands
+  function enableTerminalInteraction() {
+    const commandHistory = [];
+    let historyIndex = -1;
+    
+    // Focus on terminal
+    terminalOverlay.focus();
+    
+    // Listen for keyboard input
+    document.addEventListener('keydown', handleKeyPress);
+    
+    function handleKeyPress(e) {
+      // Enter key to continue
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        closeTerminal();
+        return;
+      }
+      
+      // Escape key to skip
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeTerminal();
+        return;
+      }
+      
+      // Tab key for autocomplete (optional feature)
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        autoCompleteCommand();
+        return;
+      }
+      
+      // Arrow up/down for command history
+      if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        navigateHistory(e.key === 'ArrowUp' ? -1 : 1);
+        return;
+      }
+      
+      // Typing in command line (only letters, numbers, spaces, and special chars)
+      if (e.key.length === 1 || e.key === 'Backspace' || e.key === ' ') {
+        updateTypingCommand(e);
+      }
+    }
+    
+    function updateTypingCommand(e) {
+      if (e.key === 'Backspace') {
+        typingCommand.textContent = typingCommand.textContent.slice(0, -1);
+      } else if (e.key.length === 1 || e.key === ' ') {
+        typingCommand.textContent += e.key;
+      }
+    }
+    
+    function autoCompleteCommand() {
+      const commonCommands = ['help', 'clear', 'projects', 'skills', 'contact', 'exit'];
+      const currentText = typingCommand.textContent.toLowerCase();
+      
+      const matches = commonCommands.filter(cmd => cmd.startsWith(currentText));
+      if (matches.length === 1) {
+        typingCommand.textContent = matches[0];
+      }
+    }
+    
+    function navigateHistory(direction) {
+      if (commandHistory.length === 0) return;
+      
+      historyIndex = Math.max(0, Math.min(commandHistory.length - 1, historyIndex + direction));
+      
+      if (historyIndex >= 0 && historyIndex < commandHistory.length) {
+        typingCommand.textContent = commandHistory[historyIndex];
+      }
+    }
+    
+    // Add command execution
+    function executeCommand(cmd) {
+      commandHistory.push(cmd);
+      historyIndex = commandHistory.length;
+      
+      switch (cmd.toLowerCase()) {
+        case 'help':
+          showHelp();
+          break;
+        case 'clear':
+          clearTerminal();
+          break;
+        case 'projects':
+          showProjects();
+          break;
+        case 'skills':
+          showSkills();
+          break;
+        case 'contact':
+          showContact();
+          break;
+        case 'exit':
+          closeTerminal();
+          break;
+        default:
+          showUnknownCommand(cmd);
+      }
+    }
+    
+    function showHelp() {
+      const helpOutput = `
+Available commands:
+• <span class="accent">help</span> - Show this help message
+• <span class="accent">projects</span> - View my projects
+• <span class="accent">skills</span> - View my technical skills
+• <span class="accent">contact</span> - Get my contact info
+• <span class="accent">clear</span> - Clear terminal
+• <span class="accent">exit</span> - Close terminal and view portfolio
+      `;
+      addOutputToTerminal(helpOutput);
+    }
+    
+    function showProjects() {
+      const projectsOutput = `
+My recent projects:
+• <span class="accent">Perfue</span> - Perfume E-commerce Website
+• <span class="accent">EarPods Max</span> - Product Landing Page
+• <span class="accent">Glowing</span> - Cosmetics E-commerce
+• <span class="accent">Cheffood</span> - Food Delivery Platform
+
+Type <span class="accent">exit</span> to view them in detail.
+      `;
+      addOutputToTerminal(projectsOutput);
+    }
+    
+    function showSkills() {
+      const skillsOutput = `
+Technical Stack:
+• <span class="dir">Languages:</span> JavaScript, Java, C++, PHP
+• <span class="dir">Frontend:</span> React, HTML5, CSS3
+• <span class="dir">Backend:</span> Node.js, Express.js
+• <span class="dir">Databases:</span> MySQL, MongoDB
+• <span class="dir">Tools:</span> Git, Linux, npm
+      `;
+      addOutputToTerminal(skillsOutput);
+    }
+    
+    function showContact() {
+      const contactOutput = `
+Get in touch:
+• <span class="accent">GitHub:</span> github.com/Yeabtsega-Tesfaye
+• <span class="accent">LinkedIn:</span> linkedin.com/in/dev-yeabtsega
+• <span class="accent">Telegram:</span> t.me/Confidential_boy
+• <span class="accent">Phone:</span> +251-914-602-982
+
+Type <span class="accent">exit</span> to view full contact section.
+      `;
+      addOutputToTerminal(contactOutput);
+    }
+    
+    function showUnknownCommand(cmd) {
+      const unknownOutput = `
+<span class="error">Command not found:</span> ${cmd}
+Type <span class="accent">help</span> for available commands.
+      `;
+      addOutputToTerminal(unknownOutput);
+    }
+    
+    function clearTerminal() {
+      const allLines = document.querySelectorAll('.terminal-line:not(.active-line), .terminal-output');
+      allLines.forEach(line => line.remove());
+      typingCommand.textContent = '';
+    }
+    
+    function addOutputToTerminal(output) {
+      const outputDiv = document.createElement('div');
+      outputDiv.className = 'terminal-output';
+      outputDiv.innerHTML = output;
+      
+      const activeLine = document.querySelector('.active-line');
+      terminalContent.insertBefore(outputDiv, activeLine);
+      
+      // Clear command line
+      typingCommand.textContent = '';
+      
+      // Scroll to bottom
+      terminalContent.parentElement.scrollTop = terminalContent.parentElement.scrollHeight;
+    }
+    
+    // Enable command execution on Enter
+    const originalHandleKeyPress = handleKeyPress;
+    document.removeEventListener('keydown', handleKeyPress);
+    
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && typingCommand.textContent.trim()) {
+        e.preventDefault();
+        const cmd = typingCommand.textContent.trim();
+        
+        // Create command line
+        const lineDiv = document.createElement('div');
+        lineDiv.className = 'terminal-line';
+        
+        const promptSpan = document.createElement('span');
+        promptSpan.className = 'prompt';
+        promptSpan.textContent = '$';
+        
+        const commandSpan = document.createElement('span');
+        commandSpan.className = 'command';
+        commandSpan.textContent = cmd;
+        
+        lineDiv.appendChild(promptSpan);
+        lineDiv.appendChild(commandSpan);
+        
+        const activeLine = document.querySelector('.active-line');
+        terminalContent.insertBefore(lineDiv, activeLine);
+        
+        // Execute command
+        executeCommand(cmd);
+        
+        // Clear typing line
+        typingCommand.textContent = '';
+        
+        // Scroll to bottom
+        terminalContent.parentElement.scrollTop = terminalContent.parentElement.scrollHeight;
+      } else {
+        originalHandleKeyPress(e);
+      }
+    });
+  }
+
+  // Close terminal
+  function closeTerminal() {
+    // Mark as seen
+    
+    // Add closing animation
+    terminalOverlay.classList.add('hidden');
+    document.documentElement.classList.remove('terminal-open');
+
+    
+    // Remove from DOM after animation
+    setTimeout(() => {
+      terminalOverlay.style.display = 'none';
+      document.removeEventListener('keydown', handleKeyPress);
+      
+      // Trigger portfolio entrance animations
+      document.body.classList.add('portfolio-loaded');
+    }, 800);
+
+    // Mark terminal as closed in sound system
+    if (window.completeSoundSystem) {
+      window.completeSoundSystem.terminalClosed = true;
+    }
+  }
+  
+  // Event listeners
+  skipButton.addEventListener('click', closeTerminal);
+  
+  // Close button functionality
+  document.querySelector('.control.close').addEventListener('click', closeTerminal);
+  
+  // Minimize button (optional feature)
+  document.querySelector('.control.minimize').addEventListener('click', () => {
+    terminalOverlay.classList.add('minimized');
+  });
+  
+  // Maximize button
+  document.querySelector('.control.maximize').addEventListener('click', () => {
+    terminalOverlay.classList.toggle('fullscreen');
+  });
+  
+  // Auto-show skip button after delay
+  setTimeout(() => {
+    skipButton.style.opacity = '1';
+    skipButton.style.visibility = 'visible';
+  }, terminalConfig.showSkipAfter);
+  
+  // Start the terminal animation after a brief delay
+  setTimeout(() => {
+    runTerminalScript();
+  }, 1000);
+  
+  // Make terminal focusable
+  terminalOverlay.tabIndex = -1;
+  terminalOverlay.focus();
+}
+
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  // Create global sound system instance
+  window.completeSoundSystem = new CompleteSoundSystem();
+  
+  // Initialize terminal
+  initTerminal();
 });
 
 // Skills with Popup - Complete

@@ -3335,7 +3335,7 @@ body.light-mode .intensity-btn {
 @media (max-width: 768px) {
 /* ===== EDGE FADE (THE RIGHT WAY) ===== */
 .skills-marquee {
-  --fade-size: 40px;
+  --fade-size: 0px;
 
   -webkit-mask-image: linear-gradient(
     to right,
