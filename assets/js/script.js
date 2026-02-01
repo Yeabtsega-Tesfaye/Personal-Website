@@ -2024,34 +2024,56 @@ const allSkills = [
     createSkillsGrid();
     setupPopup();
 
-    function createSkillsGrid() {
-        const grid = document.querySelector('.skills-grid');
-        if (!grid) return;
-        
-grid.innerHTML = allSkills.map(skill => {
-    // Check if it's an SVG path
-    const iconHTML = skill.icon.includes('.svg') 
-        ? `<img src="${skill.icon}" alt="${skill.name}" class="skill-svg-icon">`
+function createSkillsGrid() {
+  const container = document.querySelector('.skills-marquee');
+  if (!container) return;
+
+  // group by category
+  const groups = {
+    row1: ['Language', 'Tool'],
+    row2: ['Frontend', 'Backend'],
+    row3: ['Database', 'DevOps', 'Cloud', 'AI Tool', 'Data']
+  };
+
+  Object.values(groups).forEach((categories, index) => {
+    const skills = allSkills.filter(s => categories.includes(s.category));
+    if (!skills.length) return;
+
+    const row = document.createElement('div');
+    row.className = `marquee-row ${index % 2 ? 'reverse' : ''}`;
+
+    const track = document.createElement('div');
+    track.className = 'marquee-track';
+
+    // render once
+    const render = skills.map(skill => {
+      const iconHTML = skill.icon.includes('.svg')
+        ? `<img src="${skill.icon}" class="skill-svg-icon">`
         : `<i class="${skill.icon}"></i>`;
-    
-    return `
+
+      return `
         <div class="skill-card" data-skill="${skill.name.toLowerCase()}">
-            <div class="skill-icon">
-                ${iconHTML}
-            </div>
-            <div class="skill-name">${skill.name}</div>
+          <div class="skill-icon">${iconHTML}</div>
+          <div class="skill-name">${skill.name}</div>
         </div>
-    `;
-}).join('');
-        
-        // Add click handlers
-        document.querySelectorAll('.skill-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const skillName = this.dataset.skill;
-                openSkillPopup(skillName);
-            });
-        });
-    }
+      `;
+    }).join('');
+
+    // clone once for seamless loop
+    track.innerHTML = render + render;
+
+    row.appendChild(track);
+    container.appendChild(row);
+  });
+
+  // popup clicks
+  document.querySelectorAll('.skill-card').forEach(card => {
+    card.addEventListener('click', () => {
+      openSkillPopup(card.dataset.skill);
+    });
+  });
+}
+
 
     function setupPopup() {
         const popup = document.getElementById('skillPopup');

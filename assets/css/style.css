@@ -190,22 +190,23 @@ ul {
 /* ================= HEADER ================= */
 .site-header {
   position: fixed;
-  top: 0;
-  width: 100%;
+  top: 6px;
+left: 12px;
+right: 12px;
+margin: 0 auto;
+max-width: 1200px;
   background: var(--raisin-black);
   z-index: 1000;
-  padding: 1rem 0;
+  padding: 0.7rem 0;
   backdrop-filter: blur(10px);
-  background: rgba(26, 26, 27, 0.9);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .site-header.scrolled {
-  background: rgba(21, 21, 22, 0.95);
   backdrop-filter: blur(10px);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-  padding: 0.3rem 0;
+  padding: 0.5rem 0;
 }
 
 .brand .logo:hover {
@@ -800,7 +801,7 @@ flex-direction: column;
 /* ================= SERVICES ================= */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: var(--space-xl);
 }
 
@@ -1209,6 +1210,7 @@ margin: 0 auto 26px;
 
 /* ================= RESPONSIVE ================= */
 @media (max-width: 1024px) {
+
   .hero-container {
     flex-direction: column;
     text-align: center;
@@ -1263,6 +1265,8 @@ margin: 0 auto 26px;
   }
   
   .site-header {
+    border-radius: 28px;
+    background: transparent;
     padding: 0.5rem 0;
   }
   
@@ -1325,14 +1329,6 @@ margin: 0 auto 26px;
     max-width: 250px;
   }
 
-  .card-title {
-  font-size: var(--fs-9);
-}
-
-.card-text {
-  font-size: var(--fs-9);
-}
-
 .btn-overlay {
   padding: 0;
   margin: 0;
@@ -1384,6 +1380,14 @@ margin: 0 auto 26px;
     align-items: center;
     gap: 20px;
   }
+
+    .card-title {
+  font-size: var(--fs-9);
+}
+
+.card-text {
+  font-size: var(--fs-9);
+}
   
   .stat-card {
     min-width: 100px;
@@ -1757,7 +1761,7 @@ margin: 0 auto 26px;
 
 .theme-toggle.scrolled {
       position: fixed;
-      top: 55px;
+      top: 64px;
       right: 20px;
 }
 
@@ -1780,8 +1784,7 @@ body.light-mode {
 }
 
 body.light-mode .site-header {
-  background: rgba(245, 245, 247, 0.9);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background: transparent;
 }
 
 body.light-mode .hero-bg {
@@ -1919,7 +1922,7 @@ body.light-mode .skill-group:hover {
 
 .theme-toggle.scrolled {
       position: fixed;
-      top: 45px;
+      top: 55px;
       right: 20px;
 }
 
@@ -3063,12 +3066,77 @@ body.light-mode .intensity-btn {
 
 
 /* ================= SKILLS GRID ================= */
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-  gap: 12px;
-  margin-bottom: 40px;
+
+/* ===== SKILLS MARQUEE ===== */
+.skills-marquee {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 32px 0;
+  position: relative;
+  overflow: hidden;
 }
+
+/* ===== EDGE FADE (THE RIGHT WAY) ===== */
+.skills-marquee {
+  --fade-size: 80px;
+
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black var(--fade-size),
+    black calc(100% - var(--fade-size)),
+    transparent
+  );
+
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black var(--fade-size),
+    black calc(100% - var(--fade-size)),
+    transparent
+  );
+}
+
+.marquee-row {
+  display: flex;
+  overflow: hidden;
+}
+
+.marquee-track {
+  display: flex;
+  gap: 14px;
+  width: max-content;
+  animation: scroll-left 35s linear infinite;
+}
+
+.marquee-row.reverse .marquee-track {
+  animation: scroll-right 35s linear infinite;
+}
+
+/* hover = pause (premium feel) */
+.marquee-row:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* animations */
+@keyframes scroll-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes scroll-right {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+/* reuse your card */
+.skill-card {
+  min-width: 120px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+}
+
 
 .skill-card {
   border-radius: 7px;
@@ -3265,10 +3333,26 @@ body.light-mode .intensity-btn {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .skills-grid {
-    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-    gap: 10px;
-  }
+/* ===== EDGE FADE (THE RIGHT WAY) ===== */
+.skills-marquee {
+  --fade-size: 40px;
+
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black var(--fade-size),
+    black calc(100% - var(--fade-size)),
+    transparent
+  );
+
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black var(--fade-size),
+    black calc(100% - var(--fade-size)),
+    transparent
+  );
+}
   
   .skill-card {
     padding: 5px 8px;
