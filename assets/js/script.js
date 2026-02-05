@@ -99,351 +99,435 @@ document.addEventListener('click', (e) => {
  
   
   // ================= CODE RAIN CLASS =================
-  class CodeRain {
-    constructor() {
-      // Create canvas if it doesn't exist
-      if (!document.getElementById('codeRain')) {
-        const canvas = document.createElement('canvas');
-        canvas.id = 'codeRain';
-        canvas.className = 'code-rain-canvas';
-        document.body.appendChild(canvas);
-      }
+class CodeRain {
+  constructor() {
+    // Create canvas if it doesn't exist
+    if (!document.getElementById('codeRain')) {
+      const canvas = document.createElement('canvas');
+      canvas.id = 'codeRain';
+      canvas.className = 'code-rain-canvas';
       
-      this.canvas = document.getElementById('codeRain');
-      this.ctx = this.canvas.getContext('2d');
-      this.drops = [];
-      this.animationId = null;
-      this.intensity = 'medium';
+      // ADD THIS: Proper canvas styling
+      canvas.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+      `;
       
-      // Load saved settings
-      const savedIntensity = localStorage.getItem('codeRainIntensity') || 'medium';
-      const isEnabled = savedIntensity !== 'off';
-      
-      this.isActive = isEnabled;
-      this.intensity = savedIntensity;
-      
-      // Tech stack with your skills
-      this.techStack = [
-        'React', 'JavaScript', 'Node.js', 'PHP', 'C++', 'Java',
-        'HTML', 'CSS', 'Git', 'MySQL', 'MongoDB', 'Linux',
-        'Express', 'npm', 'VS Code', 'GitHub', 'Figma'
-      ];
-      
-      this.symbols = '{}<>()[];:.,?!@#$%^&*+-=~|\\/';
-      this.matrixChars = '01アイウエオカキクケコサシスセソ';
-      
-      this.allChars = this.generateCharacterSet();
-      this.init();
+      document.body.appendChild(canvas);
     }
     
-    generateCharacterSet() {
-      let chars = [];
-      
-      // Tech stack
-      this.techStack.forEach(word => {
-        for(let i = 0; i < 5; i++) chars.push(word);
+    this.canvas = document.getElementById('codeRain');
+    this.ctx = this.canvas.getContext('2d');
+    this.drops = [];
+    this.animationId = null;
+    this.intensity = 'medium';
+    
+    // Load saved settings
+    const savedIntensity = localStorage.getItem('codeRainIntensity') || 'medium';
+    const isEnabled = savedIntensity !== 'off';
+    
+    this.isActive = isEnabled;
+    this.intensity = savedIntensity;
+    
+    // Tech stack with your skills
+    this.techStack = [
+      'React', 'JavaScript', 'Node.js', 'PHP', 'C++', 'Java',
+      'HTML', 'CSS', 'Git', 'MySQL', 'MongoDB', 'Linux',
+      'Express', 'npm', 'VS Code', 'GitHub', 'Figma'
+    ];
+    
+    this.symbols = '{}<>()[];:.,?!@#$%^&*+-=~|\\/';
+    this.matrixChars = '01アイウエオカキクケコサシスセソ';
+    
+    this.allChars = this.generateCharacterSet();
+    this.init();
+  }
+  
+  generateCharacterSet() {
+    let chars = [];
+    
+    // Tech stack
+    this.techStack.forEach(word => {
+      for(let i = 0; i < 5; i++) chars.push(word);
+    });
+    
+    // Symbols
+    for(let i = 0; i < this.symbols.length; i++) {
+      for(let j = 0; j < 10; j++) chars.push(this.symbols.charAt(i));
+    }
+    
+    // Matrix chars
+    for(let i = 0; i < this.matrixChars.length; i++) {
+      for(let j = 0; j < 15; j++) chars.push(this.matrixChars.charAt(i));
+    }
+    
+    // Your branding
+    ['Yeab', 'Yeabtsega', 'silentCompiler'].forEach(text => {
+      for(let i = 0; i < 3; i++) chars.push(text);
+    });
+    
+    return chars;
+  }
+  
+  init() {
+    this.resizeCanvas();
+    this.createDrops();
+    this.setupEventListeners();
+    
+    if (this.isActive) {
+      this.show();
+      this.animate(); // Start animation
+    } else {
+      this.hide();
+    }
+    
+    // Update UI
+    this.updateUI();
+    
+    // ADD THIS: Define toggleParticles if it doesn't exist
+    if (typeof window.toggleParticles === 'undefined') {
+      window.toggleParticles = function(state) {
+        // Your particles function or a dummy function
+        console.log('toggleParticles called with:', state);
+      };
+    }
+  }
+  
+  resizeCanvas() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  }
+  
+  createDrops() {
+    const density = {
+      off: 0, light: 0.3, medium: 0.6, intense: 1
+    }[this.intensity] || 0.6;
+    
+    const columns = Math.floor((this.canvas.width / 25) * density);
+    this.drops = [];
+    
+    for(let i = 0; i < columns; i++) {
+      this.drops.push({
+        x: i * 25,
+        y: Math.random() * -this.canvas.height,
+        speed: this.getSpeed(),
+        length: 5 + Math.floor(Math.random() * 20),
+        chars: [],
+        lastUpdate: Date.now()
       });
       
-      // Symbols
-      for(let i = 0; i < this.symbols.length; i++) {
-        for(let j = 0; j < 10; j++) chars.push(this.symbols.charAt(i));
-      }
-      
-      // Matrix chars
-      for(let i = 0; i < this.matrixChars.length; i++) {
-        for(let j = 0; j < 15; j++) chars.push(this.matrixChars.charAt(i));
-      }
-      
-      // Your branding
-      ['Yeab', 'Yeabtsega', 'silentCompiler'].forEach(text => {
-        for(let i = 0; i < 3; i++) chars.push(text);
-      });
-      
-      return chars;
+      this.generateColumnChars(this.drops[i]);
     }
+  }
+  
+  getSpeed() {
+    const speeds = {
+      light: [1, 2],
+      medium: [2, 4],
+      intense: [3, 6]
+    }[this.intensity] || [2, 4];
     
-    init() {
-      this.resizeCanvas();
-      this.createDrops();
-      this.setupEventListeners();
-      
-      if (this.isActive) {
-        this.show();
-        this.animate();
-      } else {
-        this.hide();
-      }
-      
-      // Update UI
-      this.updateUI();
-    }
-    
-    resizeCanvas() {
-      this.canvas.width = window.innerWidth;
-      this.canvas.height = window.innerHeight;
-    }
-    
-    createDrops() {
-      const density = {
-        off: 0, light: 0.3, medium: 0.6, intense: 1
-      }[this.intensity] || 0.6;
-      
-      const columns = Math.floor((this.canvas.width / 25) * density);
-      this.drops = [];
-      
-      for(let i = 0; i < columns; i++) {
-        this.drops.push({
-          x: i * 25,
-          y: Math.random() * -this.canvas.height,
-          speed: this.getSpeed(),
-          length: 5 + Math.floor(Math.random() * 20),
-          chars: [],
-          lastUpdate: Date.now()
-        });
-        
-        this.generateColumnChars(this.drops[i]);
-      }
-    }
-    
-    getSpeed() {
-      const speeds = {
-        light: [1, 2],
-        medium: [2, 4],
-        intense: [3, 6]
-      }[this.intensity] || [2, 4];
-      
-      return speeds[0] + Math.random() * (speeds[1] - speeds[0]);
-    }
-    
-    generateColumnChars(drop) {
-      drop.chars = [];
-      for(let i = 0; i < drop.length; i++) {
-        const isHead = i === 0;
-        drop.chars.push({
-          char: this.allChars[Math.floor(Math.random() * this.allChars.length)],
-          brightness: isHead ? 1 : (i / drop.length) * 0.5 + 0.2,
-          isHead: isHead
-        });
-      }
-    }
-    
-    draw() {
-      const isLightMode = document.body.classList.contains('light-mode');
-      
-      // Clear with fade
-      this.ctx.fillStyle = isLightMode ? 'rgba(255, 255, 255, 0.03)' : 'rgba(21, 21, 22, 0.04)';
-      this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-      
-      this.ctx.font = '14px "Courier New", monospace';
-      this.ctx.textAlign = 'center';
-      
-      this.drops.forEach(drop => {
-        drop.chars.forEach((charObj, index) => {
-          const y = drop.y + (index * 18);
-          
-          if (y < -20 || y > this.canvas.height + 20) return;
-          
-          // Green color scheme
-          let r, g, b, a;
-          
-          if (charObj.isHead) {
-            // Bright green head
-            r = 0;
-            g = 255;
-            b = 136;
-            a = charObj.brightness;
-            this.ctx.shadowBlur = 8;
-            this.ctx.shadowColor = 'rgba(0, 255, 136, 0.5)';
-          } else {
-            // Trail - darker green
-            const greenValue = Math.floor(100 + (charObj.brightness * 100));
-            r = 0;
-            g = greenValue;
-            b = Math.floor(80 + (charObj.brightness * 40));
-            a = charObj.brightness * 0.6;
-            this.ctx.shadowBlur = 0;
-          }
-          
-          // Adjust for light mode
-          if (isLightMode && !charObj.isHead) {
-            g = Math.floor(g * 0.7);
-            b = Math.floor(b * 0.7);
-            a = a * 1.2;
-          }
-          
-          this.ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a})`;
-          this.ctx.fillText(charObj.char, drop.x, y);
-        });
-        
-        this.ctx.shadowBlur = 0;
-      });
-    }
-    
-    update() {
-      const now = Date.now();
-      
-      this.drops.forEach(drop => {
-        drop.y += drop.speed;
-        
-        if (now - drop.lastUpdate > 100) {
-          this.updateColumnChars(drop);
-          drop.lastUpdate = now;
-        }
-        
-        if (drop.y > this.canvas.height + (drop.length * 25)) {
-          drop.y = -drop.length * 20;
-          drop.speed = this.getSpeed();
-          this.generateColumnChars(drop);
-        }
-      });
-    }
-    
-    updateColumnChars(drop) {
-      for(let i = drop.chars.length - 1; i > 0; i--) {
-        drop.chars[i] = {
-          ...drop.chars[i - 1],
-          isHead: false,
-          brightness: Math.max(0.2, drop.chars[i - 1].brightness - 0.15)
-        };
-      }
-      
-      drop.chars[0] = {
+    return speeds[0] + Math.random() * (speeds[1] - speeds[0]);
+  }
+  
+  generateColumnChars(drop) {
+    drop.chars = [];
+    for(let i = 0; i < drop.length; i++) {
+      const isHead = i === 0;
+      drop.chars.push({
         char: this.allChars[Math.floor(Math.random() * this.allChars.length)],
-        brightness: 1,
-        isHead: true
+        brightness: isHead ? 1 : (i / drop.length) * 0.5 + 0.2,
+        isHead: isHead
+      });
+    }
+  }
+  
+  draw() {
+    const isLightMode = document.body.classList.contains('light-mode');
+    
+    // Clear with fade
+    this.ctx.fillStyle = isLightMode ? 'rgba(255, 255, 255, 0.03)' : 'rgba(21, 21, 22, 0.04)';
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    
+    this.ctx.font = '14px "Courier New", monospace';
+    this.ctx.textAlign = 'center';
+    
+    this.drops.forEach(drop => {
+      drop.chars.forEach((charObj, index) => {
+        const y = drop.y + (index * 18);
+        
+        if (y < -20 || y > this.canvas.height + 20) return;
+        
+        // Green color scheme
+        let r, g, b, a;
+        
+        if (charObj.isHead) {
+          // Bright green head
+          r = 0;
+          g = 255;
+          b = 136;
+          a = charObj.brightness;
+          this.ctx.shadowBlur = 8;
+          this.ctx.shadowColor = 'rgba(0, 255, 136, 0.5)';
+        } else {
+          // Trail - darker green
+          const greenValue = Math.floor(100 + (charObj.brightness * 100));
+          r = 0;
+          g = greenValue;
+          b = Math.floor(80 + (charObj.brightness * 40));
+          a = charObj.brightness * 0.6;
+          this.ctx.shadowBlur = 0;
+        }
+        
+        // Adjust for light mode
+        if (isLightMode && !charObj.isHead) {
+          g = Math.floor(g * 0.7);
+          b = Math.floor(b * 0.7);
+          a = a * 1.2;
+        }
+        
+        this.ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a})`;
+        this.ctx.fillText(charObj.char, drop.x, y);
+      });
+      
+      this.ctx.shadowBlur = 0;
+    });
+  }
+  
+  update() {
+    const now = Date.now();
+    
+    this.drops.forEach(drop => {
+      drop.y += drop.speed;
+      
+      if (now - drop.lastUpdate > 100) {
+        this.updateColumnChars(drop);
+        drop.lastUpdate = now;
+      }
+      
+      if (drop.y > this.canvas.height + (drop.length * 25)) {
+        drop.y = -drop.length * 20;
+        drop.speed = this.getSpeed();
+        this.generateColumnChars(drop);
+      }
+    });
+  }
+  
+  updateColumnChars(drop) {
+    for(let i = drop.chars.length - 1; i > 0; i--) {
+      drop.chars[i] = {
+        ...drop.chars[i - 1],
+        isHead: false,
+        brightness: Math.max(0.2, drop.chars[i - 1].brightness - 0.15)
       };
     }
     
-    animate() {
-      if (!this.isActive) return;
-      
-      this.update();
-      this.draw();
-      this.animationId = requestAnimationFrame(() => this.animate());
+    drop.chars[0] = {
+      char: this.allChars[Math.floor(Math.random() * this.allChars.length)],
+      brightness: 1,
+      isHead: true
+    };
+  }
+  
+  animate() {
+    // FIXED: Check if we should continue animating
+    if (!this.isActive || !this.canvas) return;
+    
+    this.update();
+    this.draw();
+    
+    // FIXED: Use bind to maintain context
+    this.animationId = requestAnimationFrame(() => this.animate());
+  }
+  
+  setIntensity(level) {
+    this.intensity = level;
+    this.isActive = level !== 'off';
+    
+    localStorage.setItem('codeRainIntensity', level);
+    
+    // FIXED: Check if toggleParticles exists before calling
+    if (typeof window.toggleParticles === 'function') {
+      toggleParticles(this.isActive ? false : true);
     }
     
-    setIntensity(level) {
-      this.intensity = level;
-      this.isActive = level !== 'off';
-      
-      localStorage.setItem('codeRainIntensity', level);
-      
-      // Update particles
-      if (this.isActive) {
-        toggleParticles(false);
-        this.show();
-        if (!this.animationId) this.animate();
-      } else {
-        toggleParticles(true);
-        this.hide();
-        if (this.animationId) {
-          cancelAnimationFrame(this.animationId);
-          this.animationId = null;
-        }
+    // FIXED: Better animation state management
+    if (this.isActive) {
+      this.show();
+      if (!this.animationId) {
+        this.animate();
       }
-      
       // Recreate drops with new density
       this.createDrops();
-      this.updateUI();
-      
-      // Update canvas class for CSS
-      this.canvas.className = 'code-rain-canvas';
-      if (level === 'medium') this.canvas.classList.add('active');
-      if (level === 'intense') this.canvas.classList.add('intense');
-    }
-    
-    show() {
-      this.canvas.style.display = 'block';
-      setTimeout(() => this.canvas.style.opacity = '1', 10);
-    }
-    
-    hide() {
-      this.canvas.style.opacity = '0';
-      setTimeout(() => this.canvas.style.display = 'none', 300);
-      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-    
-    toggle() {
-      const newIntensity = this.isActive ? 'off' : 'medium';
-      this.setIntensity(newIntensity);
-    }
-    
-    updateUI() {
-      const toggleBtn = document.getElementById('rainToggle');
-      const intensityBtns = document.querySelectorAll('.intensity-btn');
-      const activeBtn = document.querySelector(`[data-intensity="${this.intensity}"]`);
-      
-      if (toggleBtn) {
-        toggleBtn.classList.toggle('active', this.isActive);
-        toggleBtn.innerHTML = this.isActive ? 
-          '<i class="fas fa-pause"></i>' : 
-          '<i class="fas fa-code"></i>';
-        toggleBtn.title = this.isActive ? 'Pause code rain' : 'Start code rain';
+    } else {
+      this.hide();
+      if (this.animationId) {
+        cancelAnimationFrame(this.animationId);
+        this.animationId = null;
       }
-      
+    }
+    
+    // FIXED: Always recreate drops when intensity changes
+    if (this.isActive) {
+      this.createDrops();
+    }
+    
+    this.updateUI();
+  }
+  
+  show() {
+    this.canvas.style.display = 'block';
+    setTimeout(() => {
+      this.canvas.style.opacity = '1';
+    }, 10);
+  }
+  
+  hide() {
+    this.canvas.style.opacity = '0';
+    setTimeout(() => {
+      if (!this.isActive) {
+        this.canvas.style.display = 'none';
+      }
+    }, 300);
+  }
+  
+  toggle() {
+    const newIntensity = this.isActive ? 'off' : 'medium';
+    this.setIntensity(newIntensity);
+  }
+  
+  updateUI() {
+    const toggleBtn = document.getElementById('rainToggle');
+    const intensityBtns = document.querySelectorAll('.intensity-btn');
+    const activeBtn = document.querySelector(`[data-intensity="${this.intensity}"]`);
+    
+    if (toggleBtn) {
+      toggleBtn.classList.toggle('active', this.isActive);
+      toggleBtn.innerHTML = this.isActive ? 
+        '<i class="fas fa-pause"></i>' : 
+        '<i class="fas fa-code"></i>';
+      toggleBtn.title = this.isActive ? 'Pause code rain' : 'Start code rain';
+    }
+    
+    if (intensityBtns.length > 0) {
       intensityBtns.forEach(btn => btn.classList.remove('active'));
       if (activeBtn) activeBtn.classList.add('active');
     }
-    
-    setupEventListeners() {
-      window.addEventListener('resize', () => {
-        this.resizeCanvas();
-        this.createDrops();
-      });
-      
-      // Toggle button
-      const toggleBtn = document.getElementById('rainToggle');
-      if (toggleBtn) {
-        toggleBtn.addEventListener('click', () => this.toggle());
-      }
-      
-      // Intensity buttons
-      document.querySelectorAll('.intensity-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          this.setIntensity(btn.dataset.intensity);
-          this.closeDropdown();
-        });
-      });
-      
-      // Dropdown toggle
-      const dropdownToggle = document.querySelector('.dropdown-toggle');
-      if (dropdownToggle) {
-        dropdownToggle.addEventListener('click', (e) => {
-          e.stopPropagation();
-          document.querySelector('.dropdown-menu').classList.toggle('show');
-        });
-      }
-      
-      // Close dropdown when clicking outside
-      document.addEventListener('click', (e) => {
-        if (!e.target.closest('.rain-intensity-dropdown')) {
-          this.closeDropdown();
-        }
-      });
-      
-      // Pause when tab is hidden
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden && this.animationId) {
-          cancelAnimationFrame(this.animationId);
-          this.animationId = null;
-        } else if (!document.hidden && this.isActive && !this.animationId) {
-          this.animate();
-        }
-      });
-    }
-    
-    closeDropdown() {
-      document.querySelector('.dropdown-menu')?.classList.remove('show');
-    }
   }
-
-
-
   
-  // Initialize Code Rain
+  setupEventListeners() {
+    window.addEventListener('resize', () => {
+      this.resizeCanvas();
+      if (this.isActive) {
+        this.createDrops();
+      }
+    });
+    
+    // Toggle button - ADD NULL CHECK
+    const toggleBtn = document.getElementById('rainToggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.toggle();
+      });
+    } else {
+      // Create toggle button if it doesn't exist
+      this.createToggleButton();
+    }
+    
+    // Intensity buttons - ADD NULL CHECK
+    const intensityBtns = document.querySelectorAll('.intensity-btn');
+    if (intensityBtns.length > 0) {
+      intensityBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (btn.dataset.intensity) {
+            this.setIntensity(btn.dataset.intensity);
+          }
+          this.closeDropdown();
+        });
+      });
+    }
+    
+    // Dropdown toggle - ADD NULL CHECK
+    const dropdownToggle = document.querySelector('.dropdown-toggle');
+    if (dropdownToggle) {
+      dropdownToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const menu = document.querySelector('.dropdown-menu');
+        if (menu) menu.classList.toggle('show');
+      });
+    }
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.rain-intensity-dropdown')) {
+        this.closeDropdown();
+      }
+    });
+    
+    // Pause when tab is hidden
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && this.animationId) {
+        cancelAnimationFrame(this.animationId);
+        this.animationId = null;
+      } else if (!document.hidden && this.isActive && !this.animationId) {
+        this.animate();
+      }
+    });
+  }
+  
+  // ADD THIS METHOD: Create toggle button if missing
+  createToggleButton() {
+    const toggleBtn = document.createElement('button');
+    toggleBtn.id = 'rainToggle';
+    toggleBtn.innerHTML = '<i class="fas fa-code"></i>';
+    toggleBtn.title = 'Toggle code rain';
+    toggleBtn.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: #00ff88;
+      color: #000;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      font-size: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    `;
+    
+    toggleBtn.addEventListener('click', () => this.toggle());
+    document.body.appendChild(toggleBtn);
+    
+    // Update UI immediately
+    this.updateUI();
+  }
+  
+  closeDropdown() {
+    document.querySelector('.dropdown-menu')?.classList.remove('show');
+  }
+}
+
+// Initialize Code Rain
+window.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
     window.codeRain = new CodeRain();
-  }, 500);
+    console.log('Code Rain initialized');
+  }, 1000);
+});
   
   // ================= LAZY LOAD IMAGES =================
   function lazyLoadImages() {
