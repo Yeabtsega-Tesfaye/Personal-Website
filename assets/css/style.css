@@ -2884,7 +2884,7 @@ body.light-mode .intensity-btn {
 /* ================= FIXED SOUND CONTROLS ================= */
 .sound-controls {
   position: fixed;
-  bottom: 112px; /* Your requested 124px from bottom */
+  bottom: 58px; /* Your requested 124px from bottom */
   right: 20px;
   z-index: 9999;
   display: flex;

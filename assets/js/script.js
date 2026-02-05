@@ -101,40 +101,17 @@ document.addEventListener('click', (e) => {
   // ================= CODE RAIN CLASS =================
 class CodeRain {
   constructor() {
-    // Create canvas if it doesn't exist
-    if (!document.getElementById('codeRain')) {
-      const canvas = document.createElement('canvas');
-      canvas.id = 'codeRain';
-      canvas.className = 'code-rain-canvas';
-      
-      // ADD THIS: Proper canvas styling
-      canvas.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: -1;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        pointer-events: none;
-      `;
-      
-      document.body.appendChild(canvas);
+    // Use existing canvas
+    this.canvas = document.getElementById('codeRain');
+    if (!this.canvas) {
+      console.error('Canvas element with id "codeRain" not found');
+      return;
     }
     
-    this.canvas = document.getElementById('codeRain');
     this.ctx = this.canvas.getContext('2d');
     this.drops = [];
     this.animationId = null;
-    this.intensity = 'medium';
-    
-    // Load saved settings
-    const savedIntensity = localStorage.getItem('codeRainIntensity') || 'medium';
-    const isEnabled = savedIntensity !== 'off';
-    
-    this.isActive = isEnabled;
-    this.intensity = savedIntensity;
+    this.isActive = false; // Start off by default
     
     // Tech stack with your skills
     this.techStack = [
@@ -177,27 +154,28 @@ class CodeRain {
   }
   
   init() {
+    // Ensure canvas has proper styling
+    this.ensureCanvasStyle();
     this.resizeCanvas();
     this.createDrops();
     this.setupEventListeners();
-    
-    if (this.isActive) {
-      this.show();
-      this.animate(); // Start animation
-    } else {
-      this.hide();
+    this.updateToggleButton();
+  }
+  
+  ensureCanvasStyle() {
+    // Add minimal required styles if not already styled by CSS
+    const style = this.canvas.style;
+    if (!style.position || style.position === 'static') {
+      this.canvas.style.position = 'fixed';
+      this.canvas.style.top = '0';
+      this.canvas.style.left = '0';
+      this.canvas.style.zIndex = '-1';
+      this.canvas.style.pointerEvents = 'none';
     }
     
-    // Update UI
-    this.updateUI();
-    
-    // ADD THIS: Define toggleParticles if it doesn't exist
-    if (typeof window.toggleParticles === 'undefined') {
-      window.toggleParticles = function(state) {
-        // Your particles function or a dummy function
-        console.log('toggleParticles called with:', state);
-      };
-    }
+    // Ensure it starts hidden
+    this.canvas.style.opacity = '0';
+    this.canvas.style.display = 'none';
   }
   
   resizeCanvas() {
@@ -206,19 +184,17 @@ class CodeRain {
   }
   
   createDrops() {
-    const density = {
-      off: 0, light: 0.3, medium: 0.6, intense: 1
-    }[this.intensity] || 0.6;
+    // Create intense rain (dense coverage)
+    const columns = Math.floor(this.canvas.width / 18); // Very dense spacing
     
-    const columns = Math.floor((this.canvas.width / 25) * density);
     this.drops = [];
     
     for(let i = 0; i < columns; i++) {
       this.drops.push({
-        x: i * 25,
+        x: i * 18 + (Math.random() * 10 - 5), // Slight random offset for natural look
         y: Math.random() * -this.canvas.height,
-        speed: this.getSpeed(),
-        length: 5 + Math.floor(Math.random() * 20),
+        speed: 4 + Math.random() * 5, // Fast speed
+        length: 12 + Math.floor(Math.random() * 30), // Long trails
         chars: [],
         lastUpdate: Date.now()
       });
@@ -227,23 +203,13 @@ class CodeRain {
     }
   }
   
-  getSpeed() {
-    const speeds = {
-      light: [1, 2],
-      medium: [2, 4],
-      intense: [3, 6]
-    }[this.intensity] || [2, 4];
-    
-    return speeds[0] + Math.random() * (speeds[1] - speeds[0]);
-  }
-  
   generateColumnChars(drop) {
     drop.chars = [];
     for(let i = 0; i < drop.length; i++) {
       const isHead = i === 0;
       drop.chars.push({
         char: this.allChars[Math.floor(Math.random() * this.allChars.length)],
-        brightness: isHead ? 1 : (i / drop.length) * 0.5 + 0.2,
+        brightness: isHead ? 1 : (i / drop.length) * 0.7 + 0.2,
         isHead: isHead
       });
     }
@@ -252,8 +218,8 @@ class CodeRain {
   draw() {
     const isLightMode = document.body.classList.contains('light-mode');
     
-    // Clear with fade
-    this.ctx.fillStyle = isLightMode ? 'rgba(255, 255, 255, 0.03)' : 'rgba(21, 21, 22, 0.04)';
+    // Clear with subtle fade effect
+    this.ctx.fillStyle = isLightMode ? 'rgba(255, 255, 255, 0.02)' : 'rgba(0, 0, 0, 0.03)';
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     
     this.ctx.font = '14px "Courier New", monospace';
@@ -263,34 +229,27 @@ class CodeRain {
       drop.chars.forEach((charObj, index) => {
         const y = drop.y + (index * 18);
         
-        if (y < -20 || y > this.canvas.height + 20) return;
+        if (y < -30 || y > this.canvas.height + 30) return;
         
         // Green color scheme
         let r, g, b, a;
         
         if (charObj.isHead) {
-          // Bright green head
+          // Bright glowing head
           r = 0;
           g = 255;
           b = 136;
           a = charObj.brightness;
-          this.ctx.shadowBlur = 8;
-          this.ctx.shadowColor = 'rgba(0, 255, 136, 0.5)';
+          this.ctx.shadowBlur = 12;
+          this.ctx.shadowColor = 'rgba(0, 255, 136, 0.8)';
         } else {
-          // Trail - darker green
-          const greenValue = Math.floor(100 + (charObj.brightness * 100));
+          // Gradient trail
+          const greenValue = Math.floor(80 + (charObj.brightness * 140));
           r = 0;
           g = greenValue;
-          b = Math.floor(80 + (charObj.brightness * 40));
-          a = charObj.brightness * 0.6;
+          b = Math.floor(50 + (charObj.brightness * 70));
+          a = charObj.brightness * 0.8;
           this.ctx.shadowBlur = 0;
-        }
-        
-        // Adjust for light mode
-        if (isLightMode && !charObj.isHead) {
-          g = Math.floor(g * 0.7);
-          b = Math.floor(b * 0.7);
-          a = a * 1.2;
         }
         
         this.ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a})`;
@@ -307,14 +266,17 @@ class CodeRain {
     this.drops.forEach(drop => {
       drop.y += drop.speed;
       
-      if (now - drop.lastUpdate > 100) {
+      // Update characters frequently for smooth animation
+      if (now - drop.lastUpdate > 50) {
         this.updateColumnChars(drop);
         drop.lastUpdate = now;
       }
       
+      // Reset drop when it goes off screen
       if (drop.y > this.canvas.height + (drop.length * 25)) {
-        drop.y = -drop.length * 20;
-        drop.speed = this.getSpeed();
+        drop.y = -drop.length * 25;
+        drop.x = Math.random() * this.canvas.width; // Randomize x position
+        drop.speed = 4 + Math.random() * 5;
         this.generateColumnChars(drop);
       }
     });
@@ -325,7 +287,7 @@ class CodeRain {
       drop.chars[i] = {
         ...drop.chars[i - 1],
         isHead: false,
-        brightness: Math.max(0.2, drop.chars[i - 1].brightness - 0.15)
+        brightness: Math.max(0.1, drop.chars[i - 1].brightness - 0.1)
       };
     }
     
@@ -337,49 +299,38 @@ class CodeRain {
   }
   
   animate() {
-    // FIXED: Check if we should continue animating
     if (!this.isActive || !this.canvas) return;
     
     this.update();
     this.draw();
-    
-    // FIXED: Use bind to maintain context
     this.animationId = requestAnimationFrame(() => this.animate());
   }
   
-  setIntensity(level) {
-    this.intensity = level;
-    this.isActive = level !== 'off';
+  toggle() {
+    this.isActive = !this.isActive;
     
-    localStorage.setItem('codeRainIntensity', level);
-    
-    // FIXED: Check if toggleParticles exists before calling
-    if (typeof window.toggleParticles === 'function') {
-      toggleParticles(this.isActive ? false : true);
-    }
-    
-    // FIXED: Better animation state management
     if (this.isActive) {
-      this.show();
-      if (!this.animationId) {
-        this.animate();
-      }
-      // Recreate drops with new density
-      this.createDrops();
+      this.start();
     } else {
-      this.hide();
-      if (this.animationId) {
-        cancelAnimationFrame(this.animationId);
-        this.animationId = null;
-      }
+      this.stop();
     }
     
-    // FIXED: Always recreate drops when intensity changes
-    if (this.isActive) {
-      this.createDrops();
+    this.updateToggleButton();
+  }
+  
+  start() {
+    this.show();
+    // Reset and create fresh drops
+    this.createDrops();
+    this.animate();
+  }
+  
+  stop() {
+    this.hide();
+    if (this.animationId) {
+      cancelAnimationFrame(this.animationId);
+      this.animationId = null;
     }
-    
-    this.updateUI();
   }
   
   show() {
@@ -398,31 +349,23 @@ class CodeRain {
     }, 300);
   }
   
-  toggle() {
-    const newIntensity = this.isActive ? 'off' : 'medium';
-    this.setIntensity(newIntensity);
-  }
-  
-  updateUI() {
+  updateToggleButton() {
     const toggleBtn = document.getElementById('rainToggle');
-    const intensityBtns = document.querySelectorAll('.intensity-btn');
-    const activeBtn = document.querySelector(`[data-intensity="${this.intensity}"]`);
+    if (!toggleBtn) return;
     
-    if (toggleBtn) {
-      toggleBtn.classList.toggle('active', this.isActive);
-      toggleBtn.innerHTML = this.isActive ? 
-        '<i class="fas fa-pause"></i>' : 
-        '<i class="fas fa-code"></i>';
-      toggleBtn.title = this.isActive ? 'Pause code rain' : 'Start code rain';
-    }
-    
-    if (intensityBtns.length > 0) {
-      intensityBtns.forEach(btn => btn.classList.remove('active'));
-      if (activeBtn) activeBtn.classList.add('active');
+    if (this.isActive) {
+      toggleBtn.innerHTML = '<i class="fas fa-pause"></i>';
+      toggleBtn.title = 'Stop Code Rain';
+      toggleBtn.classList.add('active');
+    } else {
+      toggleBtn.innerHTML = '<i class="fas fa-code"></i>';
+      toggleBtn.title = 'Start Code Rain';
+      toggleBtn.classList.remove('active');
     }
   }
   
   setupEventListeners() {
+    // Handle window resize
     window.addEventListener('resize', () => {
       this.resizeCanvas();
       if (this.isActive) {
@@ -430,53 +373,24 @@ class CodeRain {
       }
     });
     
-    // Toggle button - ADD NULL CHECK
+    // Setup toggle button
     const toggleBtn = document.getElementById('rainToggle');
     if (toggleBtn) {
-      toggleBtn.addEventListener('click', (e) => {
+      // Remove any existing listeners to avoid duplicates
+      const newToggleBtn = toggleBtn.cloneNode(true);
+      toggleBtn.parentNode.replaceChild(newToggleBtn, toggleBtn);
+      
+      // Add new listener
+      newToggleBtn.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
         this.toggle();
       });
     } else {
-      // Create toggle button if it doesn't exist
-      this.createToggleButton();
+      console.error('Toggle button with id "rainToggle" not found');
     }
     
-    // Intensity buttons - ADD NULL CHECK
-    const intensityBtns = document.querySelectorAll('.intensity-btn');
-    if (intensityBtns.length > 0) {
-      intensityBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          if (btn.dataset.intensity) {
-            this.setIntensity(btn.dataset.intensity);
-          }
-          this.closeDropdown();
-        });
-      });
-    }
-    
-    // Dropdown toggle - ADD NULL CHECK
-    const dropdownToggle = document.querySelector('.dropdown-toggle');
-    if (dropdownToggle) {
-      dropdownToggle.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const menu = document.querySelector('.dropdown-menu');
-        if (menu) menu.classList.toggle('show');
-      });
-    }
-    
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.rain-intensity-dropdown')) {
-        this.closeDropdown();
-      }
-    });
-    
-    // Pause when tab is hidden
+    // Pause animation when tab is hidden, resume when visible
     document.addEventListener('visibilitychange', () => {
       if (document.hidden && this.animationId) {
         cancelAnimationFrame(this.animationId);
@@ -486,39 +400,6 @@ class CodeRain {
       }
     });
   }
-  
-  // ADD THIS METHOD: Create toggle button if missing
-  createToggleButton() {
-    const toggleBtn = document.createElement('button');
-    toggleBtn.id = 'rainToggle';
-    toggleBtn.innerHTML = '<i class="fas fa-code"></i>';
-    toggleBtn.title = 'Toggle code rain';
-    toggleBtn.style.cssText = `
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 1000;
-      background: #00ff88;
-      color: #000;
-      border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      cursor: pointer;
-      font-size: 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    `;
-    
-    toggleBtn.addEventListener('click', () => this.toggle());
-    document.body.appendChild(toggleBtn);
-    
-    // Update UI immediately
-    this.updateUI();
-  }
-  
-  closeDropdown() {
-    document.querySelector('.dropdown-menu')?.classList.remove('show');
-  }
 }
 
 // Initialize Code Rain
@@ -526,7 +407,7 @@ window.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
     window.codeRain = new CodeRain();
     console.log('Code Rain initialized');
-  }, 1000);
+  }, 2000);
 });
   
   // ================= LAZY LOAD IMAGES =================
