@@ -50,34 +50,49 @@ document.addEventListener('DOMContentLoaded', function() {
   updateHeader(); // Initial check
   
   // ================= MOBILE NAVIGATION =================
-  const navToggle = document.querySelector('.nav-toggle');
-  const navList = document.querySelector('.nav-list');
-  
-  if (navToggle) {
-    navToggle.addEventListener('click', () => {
-      navToggle.classList.toggle('active');
-      navList.classList.toggle('active');
-      document.documentElement.classList.toggle('menu-open');
-    });
-    
-    // Close menu when clicking a link
-    document.querySelectorAll('.nav-list a').forEach(link => {
-      link.addEventListener('click', () => {
-        navToggle.classList.remove('active');
-        navList.classList.remove('active');
-        document.documentElement.classList.remove('menu-open');
-      });
-    });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!navToggle.contains(e.target) && !navList.contains(e.target)) {
-        navToggle.classList.remove('active');
-        navList.classList.remove('active');
-        document.documentElement.classList.remove('menu-open');
-      }
-    });
+ const navToggle = document.querySelector('.nav-toggle');
+const navList = document.querySelector('.nav-list');
+
+navToggle.addEventListener('click', () => {
+  navList.classList.toggle('active');
+  document.documentElement.classList.toggle('menu-open');
+
+  // Swap icon
+  const navIcon = navToggle.querySelector('i');
+  if (navIcon.classList.contains('fa-bars')) {
+    navIcon.classList.replace('fa-bars', 'fa-xmark');
+  } else {
+    navIcon.classList.replace('fa-xmark', 'fa-bars');
   }
+});
+
+// Close menu when clicking a link
+document.querySelectorAll('.nav-list a').forEach(link => {
+  link.addEventListener('click', () => {
+    navList.classList.remove('active');
+    document.documentElement.classList.remove('menu-open');
+
+    const navIcon = navToggle.querySelector('i');
+    if (navIcon.classList.contains('fa-xmark')) {
+      navIcon.classList.replace('fa-xmark', 'fa-bars');
+    }
+  });
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+  if (!navToggle.contains(e.target) && !navList.contains(e.target) && navList.classList.contains('active')) {
+    navList.classList.remove('active');
+    navOverlay.classList.remove('.active');
+    document.documentElement.classList.remove('menu-open');
+
+    const icon = navToggle.querySelector('i');
+    if (icon.classList.contains('fa-xmark')) {
+      icon.classList.replace('fa-xmark', 'fa-bars');
+    }
+  }
+});
+
  
   
   // ================= CURSOR EFFECT =================

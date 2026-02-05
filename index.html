@@ -99,31 +99,30 @@
 </div>
 
   <!-- ================= HEADER ================= -->
-  <header class="site-header">
-    <div class="container header-inner">
+<header class="site-header">
+  <div class="container header-inner">
 
-      <div class="brand">
-        <a href="#" class="logo">&lt;silentCompiler/&gt;</a>
-      </div>
-
-      <nav class="main-nav">
-        <ul class="nav-list">
-          <li><a href="#about" data-text="About"><span>About</span></a></li>
-          <li><a href="#skills" data-text="Skills"><span>Skills</span></a></li>
-          <li><a href="#services" data-text="Work"><span>Work</span></a></li>
-          <li><a href="#projects" data-text="Projects"><span>Projects</span></a></li>
-          <li><a href="#contact" class="nav-cta" data-text="Contact"><span>Contact</span></a></li>
-        </ul>
-      </nav>
-
-      <button class="nav-toggle" aria-label="Toggle navigation" >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
+    <div class="brand">
+      <a href="#" class="logo">&lt;silentCompiler/&gt;</a>
     </div>
-  </header>
+
+    <nav class="main-nav">
+      <ul class="nav-list">
+        <li><a href="#about" data-text="About"><span>About</span></a></li>
+        <li><a href="#skills" data-text="Skills"><span>Skills</span></a></li>
+        <li><a href="#services" data-text="Work"><span>Work</span></a></li>
+        <li><a href="#projects" data-text="Projects"><span>Projects</span></a></li>
+        <li><a href="#contact" class="nav-cta" data-text="Contact"><span>Contact</span></a></li>
+      </ul>
+    </nav>
+
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
+
+  </div>
+</header>
+
 
   <!-- ===================== HERO SECTION ===================== -->
   <section id="hero" class="section hero">
@@ -723,5 +722,24 @@
   </button>
 </div>
   <script src="./assets/js/script.js"></script>
+  <script>
+    window.addEventListener('load', function() {
+  const loader = document.querySelector('.silent-loader');
+  document.documentElement.classList.add('loader-open');
+  
+  // Wait for animation to finish (about 1 second)
+  setTimeout(() => {
+    loader.style.opacity = '0';
+    loader.style.transition = 'opacity 0.5s ease';
+    
+    // Remove after fade
+    setTimeout(() => {
+      loader.style.display = 'none';
+      // REMOVE THE CLASS HERE - after the loader is completely hidden
+      document.documentElement.classList.remove('loader-open');
+    }, 500);
+  }, 1000); // 1 second delay to see the animation
+});
+  </script>
 </body>
 </html>
