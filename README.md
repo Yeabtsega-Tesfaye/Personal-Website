@@ -1,6 +1,6 @@
 <div align="center">
   
-  ![GitHub repo size](https://img.shields.io/github/repo-size/Yeabtsega-Tesfaye/pfolio)
+  ![GitHub repo size](https://img.shields.io/github/repo-size/Yeabtsega-Tesfaye/Personal-Website)
   ![GitHub stars](https://img.shields.io/github/stars/Yeabtsega-Tesfaye/Personal-Website?style=social)
   ![GitHub forks](https://img.shields.io/github/forks/Yeabtsega-Tesfaye/Personal-Website?style=social)
 
