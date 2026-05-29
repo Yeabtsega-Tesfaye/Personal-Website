@@ -9,9 +9,7 @@
 [![CSS3](https://img.shields.io/badge/CSS3-4k%20lines-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://github.com/Yeabtsega-Tesfaye/Personal-Website/tree/main/assets/css)
 [![JavaScript](https://img.shields.io/badge/JavaScript-2k%20lines-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://github.com/Yeabtsega-Tesfaye/Personal-Website/tree/main/assets/js)
 [![Deployed on Netlify](https://img.shields.io/badge/Deployed-Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://yeab-tsega.netlify.app/)
-[![Repo Size](https://img.shields.io/github/repo-size/Yeabtsega-Tesfaye/Personal-Website?style=for-the-badge&color=6e40c9)](https://github.com/Yeabtsega-Tesfaye/Personal-Website)
-[![Stars](https://img.shields.io/github/stars/Yeabtsega-Tesfaye/Personal-Website?style=for-the-badge&color=f0b429)](https://github.com/Yeabtsega-Tesfaye/Personal-Website/stargazers)
-
+![Repo Size](https://img.shields.io/github/languages/code-size/Yeabtsega-Tesfaye/Personal-Website?style=for-the-badge)
 </div>
 
 ---
