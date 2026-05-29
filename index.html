@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Primary meta tags -->
-  <title>Yeabtsega  -  Developer</title>
+  <title>Yeabtsega - Developer</title>
   <meta name="title" content="Yeabtsega Tesfaye - Software Engineer & Developer">
-  <meta name="description" content="Software engineering student and full-stack developer building robust, scalable applications">
+  <meta name="description"
+    content="Software engineering student and full-stack developer building robust, scalable applications">
 
   <!-- Favicon -->
   <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
@@ -32,96 +34,97 @@
   <link rel="preload" as="image" href="./assets/images/hero-banner.jpg">
 
 </head>
+
 <body>
 
-<!-- ================= TERMINAL WELCOME ================= -->
-<div class="terminal-overlay" id="terminalOverlay">
-  <div class="terminal-window">
-    <!-- Terminal Header -->
-    <div class="terminal-header">
-      <div class="terminal-controls">
-        <button class="control close" aria-label="Close terminal"></button>
-        <button class="control minimize" aria-label="Minimize terminal"></button>
-        <button class="control maximize" aria-label="Maximize terminal"></button>
-      </div>
-      <div class="terminal-title">
-        <i class="fas fa-terminal"></i>
-        terminal@silentCompiler: ~/welcome
-      </div>
-    </div>
-
-    <!-- Terminal Body -->
-    <div class="terminal-body">
-      <div class="terminal-content">
-        <!-- EMPTY - JavaScript will add content dynamically -->
-        <!-- ONLY keep the active typing line -->
-        <div class="terminal-line active-line">
-          <span class="prompt">$</span>
-          <span class="command" id="typingCommand"></span>
-          <span class="cursor">█</span>
+  <!-- ================= TERMINAL WELCOME ================= -->
+  <div class="terminal-overlay" id="terminalOverlay">
+    <div class="terminal-window">
+      <!-- Terminal Header -->
+      <div class="terminal-header">
+        <div class="terminal-controls">
+          <button class="control close" aria-label="Close terminal"></button>
+          <button class="control minimize" aria-label="Minimize terminal"></button>
+          <button class="control maximize" aria-label="Maximize terminal"></button>
+        </div>
+        <div class="terminal-title">
+          <i class="fas fa-terminal"></i>
+          terminal@silentCompiler: ~/welcome
         </div>
       </div>
-    </div>
 
-    <!-- Terminal Footer -->
-    <div class="terminal-footer">
-      <div class="hint">
-        <i class="fas fa-info-circle"></i>
-        Tip: Type <code>help</code> for available commands
+      <!-- Terminal Body -->
+      <div class="terminal-body">
+        <div class="terminal-content">
+          <!-- EMPTY - JavaScript will add content dynamically -->
+          <!-- ONLY keep the active typing line -->
+          <div class="terminal-line active-line">
+            <span class="prompt">$</span>
+            <span class="command" id="typingCommand"></span>
+            <span class="cursor">█</span>
+          </div>
+        </div>
       </div>
-      <button class="btn-skip" id="skipTerminal">
-        Skip Intro <i class="fas fa-forward"></i>
-      </button>
+
+      <!-- Terminal Footer -->
+      <div class="terminal-footer">
+        <div class="hint">
+          <i class="fas fa-info-circle"></i>
+          Tip: Type <code>help</code> for available commands
+        </div>
+        <button class="btn-skip" id="skipTerminal">
+          Skip Intro <i class="fas fa-forward"></i>
+        </button>
+      </div>
     </div>
   </div>
-</div>
 
 
-<div class="silent-loader">
-  <div class="loader-text">
-    <span class="char" style="--i:0">&lt;</span>
-    <span class="char" style="--i:1">s</span>
-    <span class="char" style="--i:2">i</span>
-    <span class="char" style="--i:3">l</span>
-    <span class="char" style="--i:4">n</span>
-    <span class="char" style="--i:5">t</span>
-    <span class="char" style="--i:6">C</span>
-    <span class="char" style="--i:7">o</span>
-    <span class="char" style="--i:8">m</span>
-    <span class="char" style="--i:9">p</span>
-    <span class="char" style="--i:10">i</span>
-    <span class="char" style="--i:11">l</span>
-    <span class="char" style="--i:12">e</span>
-    <span class="char" style="--i:13">r</span>
-    <span class="char" style="--i:14">/</span>
-    <span class="char" style="--i:15">&gt;</span>
+  <div class="silent-loader">
+    <div class="loader-text">
+      <span class="char" style="--i:0">&lt;</span>
+      <span class="char" style="--i:1">s</span>
+      <span class="char" style="--i:2">i</span>
+      <span class="char" style="--i:3">l</span>
+      <span class="char" style="--i:4">n</span>
+      <span class="char" style="--i:5">t</span>
+      <span class="char" style="--i:6">C</span>
+      <span class="char" style="--i:7">o</span>
+      <span class="char" style="--i:8">m</span>
+      <span class="char" style="--i:9">p</span>
+      <span class="char" style="--i:10">i</span>
+      <span class="char" style="--i:11">l</span>
+      <span class="char" style="--i:12">e</span>
+      <span class="char" style="--i:13">r</span>
+      <span class="char" style="--i:14">/</span>
+      <span class="char" style="--i:15">&gt;</span>
+    </div>
   </div>
-</div>
 
   <!-- ================= HEADER ================= -->
-<header class="site-header">
-  <div class="container header-inner">
+  <header class="site-header">
+    <div class="container header-inner">
 
-    <div class="brand">
-      <a href="#" class="logo">&lt;silentCompiler/&gt;</a>
+      <div class="brand">
+        <a href="#" class="logo">&lt;silentCompiler/&gt;</a>
+      </div>
+
+      <nav class="main-nav">
+        <ul class="nav-list">
+          <li><a href="#about" data-text="About"><span>About</span></a></li>
+          <li><a href="#skills" data-text="Skills"><span>Skills</span></a></li>
+          <li><a href="#services" data-text="Work"><span>Work</span></a></li>
+          <li><a href="#projects" data-text="Projects"><span>Projects</span></a></li>
+          <li><a href="#contact" class="nav-cta" data-text="Contact"><span>Contact</span></a></li>
+        </ul>
+      </nav>
+
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+
     </div>
-
-    <nav class="main-nav">
-      <ul class="nav-list">
-        <li><a href="#about" data-text="About"><span>About</span></a></li>
-        <li><a href="#skills" data-text="Skills"><span>Skills</span></a></li>
-        <li><a href="#services" data-text="Work"><span>Work</span></a></li>
-        <li><a href="#projects" data-text="Projects"><span>Projects</span></a></li>
-        <li><a href="#contact" class="nav-cta" data-text="Contact"><span>Contact</span></a></li>
-      </ul>
-    </nav>
-
-    <button class="nav-toggle" aria-label="Toggle navigation">
-      <i class="fas fa-bars"></i>
-    </button>
-
-  </div>
-</header>
+  </header>
 
 
   <!-- ===================== HERO SECTION ===================== -->
@@ -147,37 +150,38 @@
           </h1>
 
           <p class="hero-description">
-            I build software that solves real problems. From backend systems to intuitive interfaces, I focus on creating efficient, scalable solutions that make a difference.
+            I build software that solves real problems. From backend systems to intuitive interfaces, I focus on
+            creating efficient, scalable solutions that make a difference.
           </p>
 
-<div class="hero-actions">
-  <!-- View Projects button with magnetic effect -->
-  <div class="magnetic-container">
-    <div class="magnetic-particles" data-button="projects"></div>
-    <a href="#projects" class="btn btn-primary btn-magnetic" data-magnetic-id="projects">
-      View Projects
-    </a>
-  </div>
-  
-  <!-- Get in Touch button with magnetic effect -->
-  <div class="magnetic-container">
-    <div class="magnetic-particles" data-button="contact"></div>
-    <a href="#contact" class="btn btn-outline btn-magnetic" data-magnetic-id="contact">
-      Get in Touch
-    </a>
-  </div>
-</div>
+          <div class="hero-actions">
+            <!-- View Projects button with magnetic effect -->
+            <div class="magnetic-container">
+              <div class="magnetic-particles" data-button="projects"></div>
+              <a href="#projects" class="btn btn-primary btn-magnetic" data-magnetic-id="projects">
+                View Projects
+              </a>
+            </div>
 
-        <div class="hero-meta">
-          <div class="meta-item">
-            <span class="meta-value">3+</span>
-            <span class="meta-label">Years Experience</span>
+            <!-- Get in Touch button with magnetic effect -->
+            <div class="magnetic-container">
+              <div class="magnetic-particles" data-button="contact"></div>
+              <a href="#contact" class="btn btn-outline btn-magnetic" data-magnetic-id="contact">
+                Get in Touch
+              </a>
+            </div>
           </div>
-          <div class="meta-item">
-            <span class="meta-value">25+</span>
-            <span class="meta-label">Projects Built</span>
+
+          <div class="hero-meta">
+            <div class="meta-item">
+              <span class="meta-value">3+</span>
+              <span class="meta-label">Years Experience</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-value">25+</span>
+              <span class="meta-label">Projects Built</span>
+            </div>
           </div>
-        </div>
 
         </div>
 
@@ -190,7 +194,8 @@
 
             <!-- Main blob with image -->
             <div class="visual-blob">
-              <img src="./assets/images/placeholder.jpg" data-src="./assets/images/hero-banner.jpg" alt="Portrait" class="hero-image" />
+              <img src="./assets/images/placeholder.jpg" data-src="./assets/images/hero-banner.jpg" alt="Portrait"
+                class="hero-image" />
             </div>
 
             <!-- Floating decorations -->
@@ -235,17 +240,11 @@
           <div class="image-stack">
 
             <div class="image-layer image-main">
-              <img
-                src="./assets/images/about.jpg"
-                alt="Working setup"
-              />
+              <img src="./assets/images/about.jpg" alt="Working setup" />
             </div>
 
             <div class="image-layer image-overlay">
-              <img
-                src="./assets/images/about-detail.jpg"
-                alt="Detail shot"
-              />
+              <img src="./assets/images/about-detail.jpg" alt="Detail shot" />
             </div>
 
             <div class="image-frame"></div>
@@ -258,15 +257,18 @@
         <div class="about-content">
 
           <p class="about-lead">
-            I'm a software engineering student passionate about building complete solutions, not just interfaces. I enjoy working across the stack to create cohesive, efficient applications.
+            I'm a software engineering student passionate about building complete solutions, not just interfaces. I
+            enjoy working across the stack to create cohesive, efficient applications.
           </p>
 
           <p>
-            My journey started with web development, but I quickly realized the importance of understanding how everything works together. Now I focus on building systems that are maintainable, scalable, and performant.
+            My journey started with web development, but I quickly realized the importance of understanding how
+            everything works together. Now I focus on building systems that are maintainable, scalable, and performant.
           </p>
 
           <p>
-            Whether it's optimizing a database query, designing a REST API, or creating a responsive UI, I approach each problem with a focus on both the immediate need and long term sustainability.
+            Whether it's optimizing a database query, designing a REST API, or creating a responsive UI, I approach each
+            problem with a focus on both the immediate need and long term sustainability.
           </p>
 
           <a href="./assets/cv/CV.pdf" target="_blank" class="btn btn-primary">
@@ -309,7 +311,8 @@
           <h3 class="service-title">Backend Development</h3>
 
           <p class="service-text">
-            Building robust APIs, managing databases, and implementing server side logic with performance and security in mind.
+            Building robust APIs, managing databases, and implementing server side logic with performance and security
+            in mind.
           </p>
 
           <ul class="service-points">
@@ -385,83 +388,86 @@
           <span class="accent">Toolkit</span>
         </h2>
         <p class="section-description">
-          I work with a diverse set of technologies to build complete, production ready applications. <br>            I believe in using the right tool for the job. My approach combines established technologies with modern frameworks to build efficient solutions.
+          I work with a diverse set of technologies to build complete, production ready applications. <br> I believe in
+          using the right tool for the job. My approach combines established technologies with modern frameworks to
+          build efficient solutions.
 
         </p>
       </div>
 
 
-          <p class="skills-lead">
-          </p>
-
-
-  <div class="container">
-      <p style="margin-bottom: 12px;text-align: center;font-size: smaller;">
-        Technologies I use daily. Click any skill for quick info.
+      <p class="skills-lead">
       </p>
 
-<div class="skills-marquee">
-  <!-- rows injected by JS -->
-</div>
 
-              <p>
-            I'm constantly learning and adapting to new technologies while maintaining strong fundamentals in computer science and software engineering principles.
-          </p>
+      <div class="container">
+        <p style="margin-bottom: 12px;text-align: center;font-size: smaller;">
+          Technologies I use daily. Click any skill for quick info.
+        </p>
 
-                          <div class="skills-cta" style="margin-top: 16px;">
-            <a href="https://github.com/Yeabtsega-Tesfaye" target="_blank" class="btn btn-outline">
-              <i class="fab fa-github"></i>
-              View GitHub
-            </a>
-          </div>
-  </div>
-
+        <div class="skills-marquee">
+          <!-- rows injected by JS -->
         </div>
 
+        <p>
+          I'm constantly learning and adapting to new technologies while maintaining strong fundamentals in computer
+          science and software engineering principles.
+        </p>
+
+        <div class="skills-cta" style="margin-top: 16px;">
+          <a href="https://github.com/Yeabtsega-Tesfaye" target="_blank" class="btn btn-outline">
+            <i class="fab fa-github"></i>
+            View GitHub
+          </a>
+        </div>
       </div>
+
+    </div>
+
+    </div>
 
 
   </section>
 
-<!-- ===================== SKILLS SECTION ===================== -->
+  <!-- ===================== SKILLS SECTION ===================== -->
 
 
-<!-- Skill Popup - Fixed position, no scroll -->
-<div class="skill-popup" id="skillPopup">
-  <div class="popup-overlay"></div>
-  <div class="popup-card">
-    <button class="popup-close">&times;</button>
-    
-    <div class="popup-header">
-      <div class="popup-icon" id="popupIcon">
-        <i class="fab fa-js"></i>
-      </div>
-      <div>
-        <h3 id="popupTitle">JavaScript</h3>
-        <span class="skill-cat" id="popupCategory">Language</span>
-      </div>
-    </div>
+  <!-- Skill Popup - Fixed position, no scroll -->
+  <div class="skill-popup" id="skillPopup">
+    <div class="popup-overlay"></div>
+    <div class="popup-card">
+      <button class="popup-close">&times;</button>
 
-    <div class="popup-body">
-      <p id="popupDescription">Primary language for modern web development</p>
-      
-      <div class="popup-stats">
-        <div class="popup-stat">
-          <i class="fas fa-clock"></i>
-          <span id="popupExperience">3+ years</span>
+      <div class="popup-header">
+        <div class="popup-icon" id="popupIcon">
+          <i class="fab fa-js"></i>
         </div>
-        <div class="popup-stat">
-          <i class="fas fa-fire"></i>
-          <span id="popupLevel">Daily Use</span>
+        <div>
+          <h3 id="popupTitle">JavaScript</h3>
+          <span class="skill-cat" id="popupCategory">Language</span>
         </div>
       </div>
-      
-      <a href="#" class="popup-btn" id="popupGithub" target="_blank">
-        <i class="fab fa-github"></i> View Examples on GitHub
-      </a>
+
+      <div class="popup-body">
+        <p id="popupDescription">Primary language for modern web development</p>
+
+        <div class="popup-stats">
+          <div class="popup-stat">
+            <i class="fas fa-clock"></i>
+            <span id="popupExperience">3+ years</span>
+          </div>
+          <div class="popup-stat">
+            <i class="fas fa-fire"></i>
+            <span id="popupLevel">Daily Use</span>
+          </div>
+        </div>
+
+        <a href="#" class="popup-btn" id="popupGithub" target="_blank">
+          <i class="fab fa-github"></i> View Examples on GitHub
+        </a>
+      </div>
     </div>
   </div>
-</div>
 
   <!-- ===================== PORTFOLIO SECTION ===================== -->
   <section id="projects" class="section portfolio">
@@ -480,41 +486,44 @@
       </div>
 
       <div class="portfolio-grid">
-      <!-- PORTFOLIO ITEM -->
-      <article class="portfolio-card">
-        <div class="img-holder">
-          <img src="./assets/images/portfolio-2.jpg" alt="EarPods Max Project" class="img-cover" />
-        </div>
-        <div class="card-overlay">
-          <h3 class="card-title">EarPods Max</h3>
-          <p class="card-text">Product Landing Page</p>
-          <a href="https://Yeabtsega-Tesfaye.github.io/Apple-AirPods-Max/" target="_blank" class="btn-overlay"><i class="fas fa-external-link-alt"></i>View Project</a>
-        </div>
-      </article>
+        <!-- PORTFOLIO ITEM -->
+        <article class="portfolio-card">
+          <div class="img-holder">
+            <img src="./assets/images/portfolio-2.jpg" alt="EarPods Max Project" class="img-cover" />
+          </div>
+          <div class="card-overlay">
+            <h3 class="card-title">EarPods Max</h3>
+            <p class="card-text">Product Landing Page</p>
+            <a href="https://Yeabtsega-Tesfaye.github.io/Apple-AirPods-Max/" target="_blank" class="btn-overlay"><i
+                class="fas fa-external-link-alt"></i>View Project</a>
+          </div>
+        </article>
 
-      <!-- PORTFOLIO ITEM -->
-      <article class="portfolio-card">
-        <div class="img-holder">
-          <img src="./assets/images/portfolio-3.jpg" alt="Glowing Project" class="img-cover" />
-        </div>
-        <div class="card-overlay">
-          <h3 class="card-title">Glowing</h3>
-          <p class="card-text">Cosmetics E-commerce Website</p>
-          <a href="https://Yeabtsega-Tesfaye.github.io/Glowings/" target="_blank" class="btn-overlay"><i class="fas fa-external-link-alt"></i>View Project</a>
-        </div>
-      </article>
+        <!-- PORTFOLIO ITEM -->
+        <article class="portfolio-card">
+          <div class="img-holder">
+            <img src="./assets/images/portfolio-3.jpg" alt="Glowing Project" class="img-cover" />
+          </div>
+          <div class="card-overlay">
+            <h3 class="card-title">Glowing</h3>
+            <p class="card-text">Cosmetics E-commerce Website</p>
+            <a href="https://Yeabtsega-Tesfaye.github.io/Cosmetic/" target="_blank" class="btn-overlay"><i
+                class="fas fa-external-link-alt"></i>View Project</a>
+          </div>
+        </article>
 
-      <!-- PORTFOLIO ITEM -->
-      <article class="portfolio-card">
-        <div class="img-holder">
-          <img src="./assets/images/portfolio-6.jpg" alt="Casmart Project" class="img-cover" />
-        </div>
-        <div class="card-overlay">
-          <h3 class="card-title">Casmart</h3>
-          <p class="card-text">eCommerce Website</p>
-          <a href="https://Yeabtsega-Tesfaye.github.io/Casmart/" target="_blank" class="btn-overlay"><i class="fas fa-external-link-alt"></i>View Project</a>
-        </div>
-      </article>
+        <!-- PORTFOLIO ITEM -->
+        <article class="portfolio-card">
+          <div class="img-holder">
+            <img src="./assets/images/portfolio-6.jpg" alt="Casmart Project" class="img-cover" />
+          </div>
+          <div class="card-overlay">
+            <h3 class="card-title">Casmart</h3>
+            <p class="card-text">eCommerce Website</p>
+            <a href="https://Yeabtsega-Tesfaye.github.io/Casmart/" target="_blank" class="btn-overlay"><i
+                class="fas fa-external-link-alt"></i>View Project</a>
+          </div>
+        </article>
       </div>
 
       <div class="section-cta" style="margin: 1rem 0.5rem;">
@@ -553,13 +562,14 @@
           <div class="card-content">
             <div class="card-meta">
               <time datetime="2025-06-24" class="time"><i class="fas fa-calendar"></i>24 June 2025</time>
-              <span  class="read-time">5 min read</span>
+              <span class="read-time">5 min read</span>
             </div>
             <h3 class="card-title">Building My First Animated Website with GSAP</h3>
             <p class="card-text">
-              A deep dive into creating smooth animations and scroll effects for a modern perfume landing page, and the lessons learned along the way.
+              A deep dive into creating smooth animations and scroll effects for a modern perfume landing page, and the
+              lessons learned along the way.
             </p>
-            <a href="./assets/blogs/blog1.html" target="_blank" rel="noopener noreferrer" class="btn btn-read-more">
+            <a href="./blogs/blog1.html" target="_blank" rel="noopener noreferrer" class="btn btn-read-more">
               Read Article
             </a>
           </div>
@@ -568,7 +578,8 @@
         <!-- BLOG CARD -->
         <article class="blog-card">
           <div class="card-image">
-            <img src="./assets/images/Screenshot_20260129_002917_Chrome.jpg" alt="Upwork Freelancer Mistakes" class="img-cover" />
+            <img src="./assets/images/Screenshot_20260129_002917_Chrome.jpg" alt="Upwork Freelancer Mistakes"
+              class="img-cover" />
           </div>
           <div class="card-content">
             <div class="card-meta">
@@ -577,9 +588,10 @@
             </div>
             <h3 class="card-title">What I Learned as a Beginner Freelancer</h3>
             <p class="card-text">
-              Practical insights from my early freelancing experiences, including pricing, client communication, and project management on Upwork.
+              Practical insights from my early freelancing experiences, including pricing, client communication, and
+              project management on Upwork.
             </p>
-            <a href="./assets/blogs/blog2.html" target="_blank" rel="noopener noreferrer" class="btn btn-read-more">
+            <a href="./blogs/blog2.html" target="_blank" rel="noopener noreferrer" class="btn btn-read-more">
               Read Article
             </a>
           </div>
@@ -603,10 +615,10 @@
             Get in Touch
           </h4>
           <p class="footer-text">Have a project idea or want to collaborate? Give me a call!</p>
-<a href="tel:+251914602982" aria-label="Call Yeabtsega" class="footer-link btn">
-  <i class="fas fa-phone"></i>
-  Call me
-</a>
+          <a href="tel:+251914602982" aria-label="Call Yeabtsega" class="footer-link btn">
+            <i class="fas fa-phone"></i>
+            Call me
+          </a>
 
         </div>
 
@@ -616,7 +628,7 @@
             Location
           </h4>
           <p class="footer-text">
-            
+
             Based in Woldia, Ethiopia<i class="fas fa-map-marker-alt" style="color: var(--accent);"></i></p>
           <p class="footer-text">Available for remote work worldwide</p>
         </div>
@@ -649,65 +661,67 @@
       </div>
 
       <div class="footer-bottom" style="font-size: 0.8rem;">
-        <p >
-          <i class="far fa-copyright" ></i>
+        <p>
+          <i class="far fa-copyright"></i>
           2026 Yeabtsega Tesfaye. All rights reserved.
         </p>
         <p class="footer-note">
-          Built with <i class="fas fa-heart" style="color: var(--accent);"></i> and a lot of <i class="fas fa-coffee" style="color: var(--accent);"></i>
+          Built with <i class="fas fa-heart" style="color: var(--accent);"></i> and a lot of <i class="fas fa-coffee"
+            style="color: var(--accent);"></i>
         </p>
       </div>
 
     </div>
   </footer>
 
-        <!-- Code Rain Canvas -->
-<canvas id="codeRain" class="code-rain-canvas"></canvas>
+  <!-- Code Rain Canvas -->
+  <canvas id="codeRain" class="code-rain-canvas"></canvas>
 
-<!-- Code Rain Toggle & Controls -->
-<div class="rain-controls-wrapper">
-  <button id="rainToggle" class="rain-toggle" aria-label="Toggle code rain effect" title="Toggle code rain">
-    <i class="fas fa-code"></i>
-  </button>
+  <!-- Code Rain Toggle & Controls -->
+  <div class="rain-controls-wrapper">
+    <button id="rainToggle" class="rain-toggle" aria-label="Toggle code rain effect" title="Toggle code rain">
+      <i class="fas fa-code"></i>
+    </button>
+  </div>
+  </div>
+  </div>
+
+  <!-- Sound Controller UI - FINAL FIXED VERSION -->
+  <div class="sound-controls">
+    <!-- Wave on LEFT (shows when sound plays) -->
+    <div class="sound-wave">
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
     </div>
-  </div>
-</div>
 
-<!-- Sound Controller UI - FINAL FIXED VERSION -->
-<div class="sound-controls">
-  <!-- Wave on LEFT (shows when sound plays) -->
-  <div class="sound-wave">
-    <div class="wave-bar"></div>
-    <div class="wave-bar"></div>
-    <div class="wave-bar"></div>
-    <div class="wave-bar"></div>
-    <div class="wave-bar"></div>
+    <!-- Toggle on RIGHT -->
+    <button id="soundToggle" class="sound-toggle" aria-label="Toggle sound effects" title="Sound On/Off">
+      <i class="fas fa-volume-mute"></i>
+    </button>
   </div>
-  
-  <!-- Toggle on RIGHT -->
-  <button id="soundToggle" class="sound-toggle" aria-label="Toggle sound effects" title="Sound On/Off">
-    <i class="fas fa-volume-mute"></i>
-  </button>
-</div>
   <script src="./assets/js/script.js"></script>
   <script>
-    window.addEventListener('load', function() {
-  const loader = document.querySelector('.silent-loader');
-  document.documentElement.classList.add('loader-open');
-  
-  // Wait for animation to finish (about 1 second)
-  setTimeout(() => {
-    loader.style.opacity = '0';
-    loader.style.transition = 'opacity 0.5s ease';
-    
-    // Remove after fade
-    setTimeout(() => {
-      loader.style.display = 'none';
-      // REMOVE THE CLASS HERE - after the loader is completely hidden
-      document.documentElement.classList.remove('loader-open');
-    }, 500);
-  }, 1000); // 1 second delay to see the animation
-});
+    window.addEventListener('load', function () {
+      const loader = document.querySelector('.silent-loader');
+      document.documentElement.classList.add('loader-open');
+
+      // Wait for animation to finish (about 1 second)
+      setTimeout(() => {
+        loader.style.opacity = '0';
+        loader.style.transition = 'opacity 0.5s ease';
+
+        // Remove after fade
+        setTimeout(() => {
+          loader.style.display = 'none';
+          // REMOVE THE CLASS HERE - after the loader is completely hidden
+          document.documentElement.classList.remove('loader-open');
+        }, 500);
+      }, 1000); // 1 second delay to see the animation
+    });
   </script>
 </body>
+
 </html>

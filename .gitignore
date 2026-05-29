@@ -1,0 +1,60 @@
+# OS Files
+
+.DS_Store
+Thumbs.db
+
+# VS Code
+
+.vscode/
+
+# JetBrains IDEs
+
+.idea/
+
+# Logs
+
+*.log
+
+# Dependency directories
+
+node_modules/
+
+# Environment files
+
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build / Distribution folders
+
+dist/
+build/
+out/
+
+# Cache files
+
+.cache/
+.parcel-cache/
+
+# Netlify
+
+.netlify/
+
+# Coverage reports
+
+coverage/
+
+# Temporary files
+
+tmp/
+temp/
+
+# Sass cache
+
+.sass-cache/
+
+# Mac resource fork files
+
+._*
