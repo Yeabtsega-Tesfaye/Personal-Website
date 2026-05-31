@@ -5,9 +5,6 @@
 **Personal Portfolio — Yeabtsega Tesfaye**
 
 [![Live Site](https://img.shields.io/badge/Live%20Site-yeab--tsega.netlify.app-0a0a0a?style=for-the-badge&logo=netlify&logoColor=00C7B7)](https://yeab-tsega.netlify.app/)
-[![HTML5](https://img.shields.io/badge/HTML5-1k%20lines-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://github.com/Yeabtsega-Tesfaye/Personal-Website/blob/main/index.html)
-[![CSS3](https://img.shields.io/badge/CSS3-4k%20lines-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://github.com/Yeabtsega-Tesfaye/Personal-Website/tree/main/assets/css)
-[![JavaScript](https://img.shields.io/badge/JavaScript-2k%20lines-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://github.com/Yeabtsega-Tesfaye/Personal-Website/tree/main/assets/js)
 [![Deployed on Netlify](https://img.shields.io/badge/Deployed-Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://yeab-tsega.netlify.app/)
 ![Repo Size](https://img.shields.io/github/languages/code-size/Yeabtsega-Tesfaye/Personal-Website?style=for-the-badge)
 </div>
